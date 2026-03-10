@@ -1,73 +1,133 @@
-# Welcome to your Lovable project
+# SenaniTech — Website
 
-## Project info
+>A small Vite + React + TypeScript starter configured with shadcn/ui components and TailwindCSS, used as the marketing site for SenaniTech.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Contents
 
-## How can I edit this code?
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Local development](#local-development)
+- [Build & preview](#build--preview)
+- [Code-splitting notes](#code-splitting-notes)
+- [Removing build-time tooling additions](#removing-build-time-tooling-additions)
+- [Linting & tests](#linting--tests)
+- [Deploying](#deploying)
+- [Contributing](#contributing)
 
-There are several ways of editing your application.
+## Overview
 
-**Use Lovable**
+This repository contains a Vite + React (SWC) TypeScript app with TailwindCSS and several Radix UI components. It is intended as a static site (marketing) for SenaniTech.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Key technologies:
 
-Changes made via Lovable will be committed automatically to this repo.
+- Vite (build tooling)
+- React 18 with JSX runtime
+- TypeScript
+- TailwindCSS
+- shadcn/ui generated components
 
-**Use your preferred IDE**
+## Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js 18+ (recommended)
+- npm (or yarn / pnpm)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Local development
 
-Follow these steps:
+Install dependencies:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+npm install
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Run dev server:
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open http://localhost:8080 (port configured in `vite.config.ts`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Build & preview
 
-**Use GitHub Codespaces**
+Create a production build:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm run build
+```
 
-## What technologies are used for this project?
+Preview the production build locally:
 
-This project is built with:
+```bash
+npm run start
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The `dist/` directory will contain the built site.
 
-## How can I deploy this project?
+## Code-splitting notes
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+You may see Vite warnings about large chunks. This project includes a `build` section in `vite.config.ts` that:
 
-## Can I connect a custom domain to my Lovable project?
+- raises `chunkSizeWarningLimit`, and
+- uses `rollupOptions.output.manualChunks` to group `node_modules` into a `vendor` chunk and component code into a `components` chunk.
 
-Yes, you can!
+If you still hit large chunk warnings or want finer splitting, consider:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- Converting large page-level components to dynamic imports (`await import('./LargePage')`) so they load only when needed.
+- Adding additional `manualChunks` rules for specific heavy libraries (charts, big UI libraries).
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Example dynamic import:
+
+```tsx
+const Page = React.lazy(() => import('./pages/BigPage'));
+// or
+const Big = () => {
+  const Component = React.lazy(() => import('./components/HeavyComponent'));
+  return (
+    <Suspense fallback={null}>
+      <Component />
+    </Suspense>
+  );
+};
+```
+
+## Removing build-time tooling additions
+
+This project previously used `lovable-tagger` as a development plugin. That usage has been removed from `vite.config.ts` and from `devDependencies`.
+
+If your `package-lock.json` or `node_modules` still contains `lovable-tagger`, run:
+
+```bash
+npm install
+```
+
+to update the lockfile and remove the package from node_modules.
+
+## Linting & tests
+
+Run linter:
+
+```bash
+npm run lint
+```
+
+Run tests:
+
+```bash
+npm run test
+# or watch
+npm run test:watch
+```
+
+## Deploying
+
+This is a static site — output in `dist/` can be deployed to any static host (Netlify, Vercel, GitHub Pages, S3, etc.). Ensure the host serves `index.html` for SPA routes if you use client-side routing.
+
+## Contributing
+
+1. Fork the repo
+2. Create a feature branch
+3. Run the dev server and add your changes
+4. Open a pull request
+
+--
+If you want, I can run `npm install` to update the lockfile and then run a production build to verify chunk sizes. Would you like me to do that now?
