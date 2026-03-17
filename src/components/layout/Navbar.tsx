@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -53,20 +53,17 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between">
+        <nav className="relative flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative group inline-flex items-center gap-3">
             <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-3">
-              {/* Short logo for compact/small screens */}
-              <img src={logoShort} alt="SenaniTech" className="w-16 h-16 object-contain sm:hidden" />
-
-              {/* Long/full logo for larger screens */}
-              <img src={logoLong} alt="SenaniTech" className="hidden sm:block h-20 object-contain" />
+              <img src={logoShort} alt="SenaniTech" className="w-14 h-14 object-contain" />
+              <img src={logoLong} alt="SenaniTech" className="h-16 md:h-24 w-auto max-w-[320px] object-contain" />
             </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-2 justify-center absolute left-1/2 transform -translate-x-1/2">
             {navItems.map((item) => (
               <div
                 key={item.name}
@@ -141,8 +138,29 @@ export function Navbar() {
           </div>
 
           {/* Theme toggle + CTA Button */}
-          <div className="hidden lg:flex items-center gap-2">
-            {/* <ThemeToggle /> */}
+          <div className="hidden lg:flex items-center gap-4">
+            {/* Contact column (email above, phone below) styled */}
+            <div className="flex flex-col items-end mr-2">
+              <div className="flex flex-col bg-white/5 border border-default/40 rounded-md px-3 py-1 shadow-sm">
+                <a
+                  href="mailto:hello@senani-tech.com"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Mail size={14} className="text-muted-foreground" />
+                  <span className="leading-tight">hello@senani-tech.com</span>
+                </a>
+
+                <a
+                  href="tel:+15550100000"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mt-1"
+                >
+                  <Phone size={14} className="text-muted-foreground" />
+                  <span className="leading-tight">+1 (555) 010-0000</span>
+                </a>
+              </div>
+            </div>
+
+            {/* CTA Button */}
             <Link to="/contact">
               <Button variant="hero" size="lg">
                 Get Started
@@ -172,14 +190,36 @@ export function Navbar() {
                 <div className="max-w-md w-full mx-auto pt-6 pb-12 px-6">
                   <div className="flex items-center justify-between mb-6">
                     <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-card">
-                        <span className="text-primary-foreground font-bold text-xl font-display">S</span>
+                      <div className="flex items-center gap-3">
+                        <img src={logoShort} alt="SenaniTech" className="w-12 h-12 object-contain" />
+                        <img src={logoLong} alt="SenaniTech" className="h-16 md:h-24 w-auto max-w-[320px] object-contain" />
                       </div>
                       <span className="text-lg font-semibold gradient-text-bright">SenaniTech</span>
                     </Link>
                     <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 rounded-md">
                       <X size={22} />
                     </button>
+                  </div>
+
+                  {/* Mobile contact block */}
+                  <div className="mb-4">
+                    <div className="flex flex-col bg-white/5 border border-default/40 rounded-md px-4 py-3 shadow-sm">
+                      <a
+                        href="mailto:hello@senani-tech.com"
+                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Mail size={16} className="text-muted-foreground" />
+                        <span className="leading-tight">hello@senani-tech.com</span>
+                      </a>
+
+                      <a
+                        href="tel:+15550100000"
+                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mt-2"
+                      >
+                        <Phone size={16} className="text-muted-foreground" />
+                        <span className="leading-tight">+1 (555) 010-0000</span>
+                      </a>
+                    </div>
                   </div>
 
                   <div className="space-y-4">
