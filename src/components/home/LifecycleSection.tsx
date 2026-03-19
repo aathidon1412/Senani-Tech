@@ -16,36 +16,73 @@ const phases = [
     title: "Concept",
     description: "Initial ideation and requirements analysis",
     color: "from-primary to-primary/70",
+    points: [
+      "Concept",
+      "Concept Validation",
+      "Product Specification Development",
+      "System Architecture",
+    ],
   },
   {
     icon: PenTool,
     title: "Design",
     description: "Schematic, layout, and simulation",
     color: "from-primary/70 to-accent",
+    points: [
+      "Hardware Design & Firmware Development",
+      "HW High & Low Level Design",
+      "Component Engineering",
+      "Board Bring-Up",
+    ],
   },
   {
     icon: Cpu,
     title: "Prototype",
     description: "Rapid prototyping and iteration",
     color: "from-accent to-accent/70",
+    points: [
+      "PCB Design",
+      "PCB Layout Design",
+      "Signal / Power / Thermal Integrity Analysis",
+      "High-Speed Design (HDI and ATI Boards)",
+    ],
   },
   {
     icon: TestTube,
     title: "Validation",
     description: "Testing and verification",
     color: "from-accent/70 to-highlight",
+    points: [
+      "Mechanical Design and Development",
+      "Enclosure Design",
+      "Mechanical / Industrial Design",
+      "Enclosure Fabrication",
+      "Mass Fabrication for SS, MS",
+    ],
   },
   {
     icon: Factory,
     title: "Production",
     description: "Manufacturing and quality control",
     color: "from-highlight to-highlight/70",
+    points: [
+      "Electronics and Manufacturing Service",
+      "Printed Circuit Board Manufacturing",
+      "Printed Circuit Board Assembly",
+    ],
   },
   {
     icon: Rocket,
     title: "Launch",
     description: "Market-ready deployment",
     color: "from-highlight/70 to-primary",
+    points: [
+      "Box Building / Regulatory Compliance",
+      "Power ON Testing",
+      "Box Building",
+      "Cable Harness",
+      "EMI/EMC Consulting",
+    ],
   },
 ];
 
@@ -110,7 +147,7 @@ export function LifecycleSection() {
                 className="relative group"
               >
                 {/* Card */}
-                <div className="relative p-6 rounded-2xl card hover: transition-all duration-300 text-center h-full">
+                <div className="relative p-6 rounded-2xl card transition-all duration-300 text-center h-full">
                   {/* Pulse effect */}
                   {/* <motion.div
                     animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
@@ -135,10 +172,21 @@ export function LifecycleSection() {
                     {phase.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  {/* Description (hidden on hover) */}
+                  <p className="text-xs text-muted-foreground leading-relaxed group-hover:hidden">
                     {phase.description}
                   </p>
+
+                  {/* Points list shown on hover/focus */}
+                  {phase.points && (
+                    <ul className="text-xs text-muted-foreground leading-relaxed hidden group-hover:block text-left mt-2 space-y-1">
+                      {phase.points.map((p, i) => (
+                        <li key={i} className="before:content-['•'] before:mr-2 before:text-highlight">
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
 
                 {/* Arrow - Desktop */}

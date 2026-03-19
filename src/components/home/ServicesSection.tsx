@@ -15,20 +15,21 @@ const services = [
   {
     icon: Cog,
     title: "Technology Services",
-    description: "Integrated engineering and manufacturing solutions spanning simulation, prototyping, and validation for complex electronic systems.",
+    description: "SenaniTech's technology services provide tightly integrated prototyping validation through a comprehensive one-stop solution for engineering and manufacturing requirements.",
     link: "/technology-services",
-    features: ["Signal & Power Integrity", "Substrate Design", "Embedded Software"],
+    features: ["Prototyping Validation", "Integrated Engineering", "One-Stop Manufacturing"],
     gradient: "from-accent to-highlight",
   },
   {
     icon: Layers,
-    title: "Systems Solutions",
-    description: "End-to-end product lifecycle partnership from hardware design through production build, ensuring seamless integration.",
-    link: "/systems-solutions",
-    features: ["Hardware Design", "FPGA Development", "Product Validation"],
+    title: "System Solutions",
+    description: "Comprehensive product lifecycle coverage through close client collaboration, merging cutting-edge technology, engineering excellence, and domain expertise to deliver transformative products.",
+    link: "/system-solutions",
+    features: ["Full Lifecycle Coverage", "Engineering Excellence", "Domain Expertise"],
     gradient: "from-highlight to-primary",
   },
 ];
+
 
 export function ServicesSection() {
   const containerRef = useRef<HTMLDivElement>(null);

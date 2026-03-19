@@ -90,8 +90,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            From ATE services to PCB design, simulations, and integrated manufacturing — 
-            we transform your ideas into market-ready products with engineering excellence.
+          Solving complex engineering challenges across the full Semiconductor and Technology spectrum, leveraging best-in-class design and integrated manufacturing.
           </motion.p>
 
           {/* CTA Buttons */}
