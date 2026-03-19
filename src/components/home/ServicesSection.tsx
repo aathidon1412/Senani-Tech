@@ -1,11 +1,15 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Cpu, Cog, Layers, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+
+import semiconductorImg from "@/assets/ServiceSection/Semiconductor.png";
+import technologyImg from "@/assets/ServiceSection/Technology.png";
+import systemImg from "@/assets/ServiceSection/System.png";
 
 const services = [
   {
-    icon: Cpu,
+    image: semiconductorImg,
     title: "Semiconductor Services",
     description: "Comprehensive ATE services including probe cards, final test boards, and signal integrity solutions for leading semiconductor platforms.",
     link: "/semiconductor-services",
@@ -13,7 +17,7 @@ const services = [
     gradient: "from-primary to-accent",
   },
   {
-    icon: Cog,
+    image: technologyImg,
     title: "Technology Services",
     description: "SenaniTech's technology services provide tightly integrated prototyping validation through a comprehensive one-stop solution for engineering and manufacturing requirements.",
     link: "/technology-services",
@@ -21,7 +25,7 @@ const services = [
     gradient: "from-accent to-highlight",
   },
   {
-    icon: Layers,
+    image: systemImg,
     title: "System Solutions",
     description: "Comprehensive product lifecycle coverage through close client collaboration, merging cutting-edge technology, engineering excellence, and domain expertise to deliver transformative products.",
     link: "/system-solutions",
@@ -101,9 +105,9 @@ function ServiceCard({ service, index }: { service: typeof services[number]; ind
       onMouseEnter={() => setHovered(index)}
       onMouseLeave={() => setHovered(null)}
     >
-      <div className={`relative h-full p-8 rounded-2xl card overflow-hidden transition-all duration-500 ${isHovered ? "-translate-y-2 shadow-2xl shadow-primary/20" : ""}`}>
+      <div className={`relative h-full rounded-2xl card overflow-hidden transition-all duration-500 flex flex-col ${isHovered ? "-translate-y-2 shadow-2xl shadow-primary/20" : ""}`}>
         {/* Shimmer effect on hover */}
-        <div className={`${isHovered ? "opacity-100" : "opacity-0"} absolute inset-0 transition-opacity duration-500`}>
+        <div className={`${isHovered ? "opacity-100" : "opacity-0"} absolute inset-0 z-10 pointer-events-none transition-opacity duration-500`}>
           <div
             className="absolute inset-0 bg-gradient-to-r from-transparent via-highlight/10 to-transparent"
             style={{ transform: isHovered ? "translateX(100%)" : "translateX(-100%)", transition: "transform 1s" }}
@@ -112,36 +116,42 @@ function ServiceCard({ service, index }: { service: typeof services[number]; ind
 
         {/* Top gradient line */}
         <div
-          className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${service.gradient}`}
+          className={`absolute top-0 left-0 right-0 h-1 z-20 bg-gradient-to-r ${service.gradient}`}
         />
 
-        {/* Icon */}
-        <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} p-[1px] mb-6`}>
-          <div className={`w-full h-full rounded-2xl bg-card flex items-center justify-center transition-colors`} style={{ background: isHovered ? undefined : undefined }}>
-            <service.icon size={28} className="text-highlight" />
-          </div>
+        {/* Image */}
+        <div className="relative w-full h-52 overflow-hidden">
+          <img
+            src={service.image}
+            alt={service.title}
+            className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? "scale-105" : "scale-100"}`}
+          />
+          {/* Gradient overlay at bottom of image */}
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-card to-transparent" />
         </div>
 
         {/* Content */}
-        <h3 className={`text-xl font-display font-bold mb-3 transition-colors`} style={{ color: isHovered ? undefined : undefined }}>
-          {service.title}
-        </h3>
-        <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
+        <div className="flex flex-col flex-1 p-7 pt-5">
+          <h3 className="text-xl font-display font-bold mb-3">
+            {service.title}
+          </h3>
+          <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
 
-        {/* Features */}
-        <ul className="space-y-2 mb-8">
-          {service.features.map((feature) => (
-            <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="w-1.5 h-1.5 rounded-full bg-highlight" />
-              {feature}
-            </li>
-          ))}
-        </ul>
+          {/* Features */}
+          <ul className="space-y-2 mb-8">
+            {service.features.map((feature) => (
+              <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="w-1.5 h-1.5 rounded-full bg-highlight flex-shrink-0" />
+                {feature}
+              </li>
+            ))}
+          </ul>
 
-        {/* Link */}
-        <div className="flex items-center gap-2 text-highlight font-medium mt-auto">
-          <span>Learn More</span>
-          <ArrowRight size={16} className={`transition-transform ${isHovered ? "translate-x-2" : ""}`} />
+          {/* Link */}
+          <div className="flex items-center gap-2 text-highlight font-medium mt-auto">
+            <span>Learn More</span>
+            <ArrowRight size={16} className={`transition-transform ${isHovered ? "translate-x-2" : ""}`} />
+          </div>
         </div>
       </div>
     </Link>

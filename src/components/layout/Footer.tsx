@@ -22,7 +22,6 @@ const footerLinks = {
   quickLinks: [
     { name: "About Us", path: "/about" },
     { name: "Contact", path: "/contact" },
-    { name: "Careers", path: "/careers" },
   ],
   contact: {
     email: "info@senanitech.com",
@@ -47,9 +46,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
           <div className="space-y-6">
-            <Link to="/" className="inline-flex items-center gap-2 no-underline">
-              <img src={logoShort} alt="SenaniTech" className="w-12 h-12 rounded-lg object-contain sm:hidden" />
-              <img src={logoLong} alt="SenaniTech" className="hidden sm:block h-8 object-contain" />
+            <Link to="/" className="inline-flex items-center gap-3 no-underline">
+              <img src={logoShort} alt="SenaniTech Icon" className="w-10 h-10 sm:w-14 sm:h-14 object-contain flex-shrink-0" />
+              <img src={logoLong} alt="SenaniTech" className="h-8 sm:h-12 w-auto object-contain" />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Your worldwide partner in semiconductor and electronics engineering excellence.

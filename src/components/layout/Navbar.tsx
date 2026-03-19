@@ -71,17 +71,19 @@ export function Navbar() {
                 onMouseEnter={() => item.dropdown && setActiveDropdown(item.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <Link
-                  to={item.path}
-                  className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1",
-                    location.pathname === item.path
-                      ? "text-highlight"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  {item.name}
-                  {item.dropdown && (
+                {item.dropdown ? (
+                  <button
+                    onClick={() =>
+                      setActiveDropdown(activeDropdown === item.name ? null : item.name)
+                    }
+                    className={cn(
+                      "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1 cursor-pointer",
+                      activeDropdown === item.name
+                        ? "text-highlight"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {item.name}
                     <ChevronDown
                       size={14}
                       className={cn(
@@ -89,8 +91,20 @@ export function Navbar() {
                         activeDropdown === item.name && "rotate-180"
                       )}
                     />
-                  )}
-                </Link>
+                  </button>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={cn(
+                      "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1",
+                      location.pathname === item.path
+                        ? "text-highlight"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )}
 
                 {/* Active indicator */}
                 {location.pathname === item.path && (
@@ -230,18 +244,41 @@ export function Navbar() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.06 }}
                       >
-                        <Link
-                          to={item.path}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className={cn(
-                            "block px-3 py-3 rounded-lg text-lg font-medium transition-all",
-                            location.pathname === item.path
-                              ? "bg-primary/10 text-highlight"
-                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
+                        {item.dropdown ? (
+                          <button
+                            onClick={() =>
+                              setActiveDropdown(activeDropdown === item.name ? null : item.name)
+                            }
+                            className={cn(
+                              "w-full text-left flex items-center justify-between px-3 py-3 rounded-lg text-lg font-medium transition-all",
+                              activeDropdown === item.name
+                                ? "bg-primary/10 text-highlight"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                            )}
+                          >
+                            {item.name}
+                            <ChevronDown
+                              size={16}
+                              className={cn(
+                                "transition-transform duration-200",
+                                activeDropdown === item.name && "rotate-180"
+                              )}
+                            />
+                          </button>
+                        ) : (
+                          <Link
+                            to={item.path}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={cn(
+                              "block px-3 py-3 rounded-lg text-lg font-medium transition-all",
+                              location.pathname === item.path
+                                ? "bg-primary/10 text-highlight"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        )}
 
                         {item.dropdown && (
                           <div className="pl-4 mt-2 space-y-1">

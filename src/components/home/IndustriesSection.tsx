@@ -1,25 +1,24 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { 
-  Cpu, 
-  Brain, 
-  Server, 
-  HardDrive, 
-  Network, 
-  HeartPulse, 
-  Car,
-  Smartphone 
-} from "lucide-react";
+
+import semiconductorImg from "@/assets/IndustrySection/SemiConductors.png";
+import aimlImg from "@/assets/IndustrySection/AIML.png";
+import dataCenterImg from "@/assets/IndustrySection/DataCenter.png";
+import storageImg from "@/assets/IndustrySection/Storage.png";
+import networkingImg from "@/assets/IndustrySection/Networking.png";
+import healthcareImg from "@/assets/IndustrySection/Healthcare.png";
+import automotiveImg from "@/assets/IndustrySection/Automotive.png";
+import consumerImg from "@/assets/IndustrySection/Consumer.png";
 
 const industries = [
-  { icon: Cpu, name: "Semiconductor", description: "Chip testing & validation" },
-  { icon: Brain, name: "AI/ML", description: "Machine learning hardware" },
-  { icon: Server, name: "Data Center", description: "Server infrastructure" },
-  { icon: HardDrive, name: "Storage", description: "SSD & memory solutions" },
-  { icon: Network, name: "Networking", description: "High-speed connectivity" },
-  { icon: HeartPulse, name: "Healthcare", description: "Medical devices" },
-  { icon: Car, name: "Automotive", description: "Vehicle electronics" },
-  { icon: Smartphone, name: "Consumer", description: "Consumer electronics" },
+  { image: semiconductorImg, name: "Semiconductor", description: "Chip testing & validation" },
+  { image: aimlImg,          name: "AI/ML",          description: "Machine learning hardware" },
+  { image: dataCenterImg,    name: "Data Center",    description: "Server infrastructure" },
+  { image: storageImg,       name: "Storage",        description: "SSD & memory solutions" },
+  { image: networkingImg,    name: "Networking",     description: "High-speed connectivity" },
+  { image: healthcareImg,    name: "Healthcare",     description: "Medical devices" },
+  { image: automotiveImg,    name: "Automotive",     description: "Vehicle electronics" },
+  { image: consumerImg,      name: "Consumer",       description: "Consumer electronics" },
 ];
 
 export function IndustriesSection() {
@@ -30,7 +29,7 @@ export function IndustriesSection() {
     <section className="relative py-24 overflow-hidden bg-secondary/20">
       {/* Background Pattern */}
       <div className="absolute inset-0 circuit-pattern opacity-10" />
-      
+
       <div className="container mx-auto px-4 relative" ref={containerRef}>
         {/* Section Header */}
         <motion.div
@@ -52,7 +51,7 @@ export function IndustriesSection() {
           </p>
         </motion.div>
 
-        {/* Industries Marquee (visible on large screens) */}
+        {/* Industries Marquee (desktop) */}
         <div className="relative hidden lg:block">
           {/* Fade edges */}
           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
@@ -72,18 +71,22 @@ export function IndustriesSection() {
                   transition={{ duration: 0.5, delay: (index % industries.length) * 0.05 }}
                   className="flex-shrink-0 group"
                 >
-                  <div className="relative p-6 rounded-2xl card hover:bg-card/80 transition-all duration-300 hover:-translate-y-1 w-48">
-                    {/* Glow effect on hover */}
-                    {/* <div className="absolute inset-0 rounded-2xl bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity" /> */}
-                    
-                    <div className="relative flex flex-col items-center text-center gap-3">
-                      <div className="w-14 h-14 rounded-xl flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-colors">
-                        <industry.icon size={28} className="text-highlight" />
-                      </div>
-                      <h3 className="font-semibold text-foreground group-hover:text-highlight transition-colors">
+                  <div className="relative p-4 rounded-2xl card hover:bg-card/80 transition-all duration-300 hover:-translate-y-1 w-48">
+                    {/* Image */}
+                    <div className="w-full h-32 rounded-xl overflow-hidden mb-3">
+                      <img
+                        src={industry.image}
+                        alt={industry.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+
+                    {/* Text */}
+                    <div className="text-center">
+                      <h3 className="font-semibold text-foreground text-sm">
                         {industry.name}
                       </h3>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-muted-foreground mt-0.5">
                         {industry.description}
                       </p>
                     </div>
@@ -102,10 +105,21 @@ export function IndustriesSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="p-4 rounded-xl card text-center"
+              className="rounded-xl card overflow-hidden group"
             >
-              <industry.icon size={24} className="text-highlight mx-auto mb-2" />
-              <span className="text-sm font-medium">{industry.name}</span>
+              {/* Image */}
+              <div className="w-full h-28 overflow-hidden">
+                <img
+                  src={industry.image}
+                  alt={industry.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              {/* Text */}
+              <div className="p-3 text-center">
+                <span className="text-sm font-medium">{industry.name}</span>
+                <p className="text-xs text-muted-foreground mt-0.5">{industry.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>

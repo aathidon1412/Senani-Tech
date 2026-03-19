@@ -24,7 +24,7 @@ const buttonVariants = cva(
         "glow-outline":
           "relative border-2 border-primary/50 bg-transparent text-foreground hover:border-highlight hover:text-highlight hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 active:translate-y-0",
         "hero":
-          "relative bg-gradient-to-r from-primary via-accent to-highlight text-primary-foreground font-semibold shadow-2xl shadow-primary/30 hover:shadow-3xl hover:shadow-primary/50 hover:-translate-y-1 hover:text-black active:translate-y-0 overflow-hidden before:absolute before:inset-0 before:z-0 before:bg-gradient-to-r before:from-highlight before:via-accent before:to-primary before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500",
+          "relative bg-gradient-to-r from-primary via-accent to-highlight text-primary-foreground font-semibold shadow-2xl shadow-primary/30 hover:shadow-3xl hover:shadow-primary/50 hover:-translate-y-1 active:translate-y-0 overflow-hidden before:absolute before:inset-0 before:z-0 before:bg-gradient-to-r before:from-highlight before:via-accent before:to-primary before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500",
         "hero-outline":
           "relative border-2 border-highlight/50 bg-transparent text-foreground font-semibold hover:border-highlight hover:bg-highlight/10 hover:text-highlight hover:shadow-xl hover:shadow-highlight/20 hover:-translate-y-1 active:translate-y-0",
       },
