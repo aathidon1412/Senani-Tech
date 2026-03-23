@@ -208,7 +208,6 @@ export function Navbar() {
                         <img src={logoShort} alt="SenaniTech" className="w-12 h-12 object-contain" />
                         <img src={logoLong} alt="SenaniTech" className="h-16 md:h-24 w-auto max-w-[320px] object-contain" />
                       </div>
-                      <span className="text-lg font-semibold gradient-text-bright">SenaniTech</span>
                     </Link>
                     <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 rounded-md">
                       <X size={22} />

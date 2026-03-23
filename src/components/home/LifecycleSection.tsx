@@ -1,18 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { 
-  Lightbulb, 
-  PenTool, 
-  Cpu, 
-  TestTube, 
-  Factory, 
-  Rocket,
-  ArrowRight 
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
+
+import conceptImg   from "@/assets/lifecycle/concept.png";
+import designImg    from "@/assets/lifecycle/design.png";
+import prototypeImg from "@/assets/lifecycle/prototype.png";
+import validationImg from "@/assets/lifecycle/validation.png";
+import productionImg from "@/assets/lifecycle/production.png";
+import launchImg    from "@/assets/lifecycle/launch.png";
 
 const phases = [
   {
-    icon: Lightbulb,
+    image: conceptImg,
     title: "Concept",
     description: "Initial ideation and requirements analysis",
     color: "from-primary to-primary/70",
@@ -24,7 +23,7 @@ const phases = [
     ],
   },
   {
-    icon: PenTool,
+    image: designImg,
     title: "Design",
     description: "Schematic, layout, and simulation",
     color: "from-primary/70 to-accent",
@@ -36,7 +35,7 @@ const phases = [
     ],
   },
   {
-    icon: Cpu,
+    image: prototypeImg,
     title: "Prototype",
     description: "Rapid prototyping and iteration",
     color: "from-accent to-accent/70",
@@ -48,7 +47,7 @@ const phases = [
     ],
   },
   {
-    icon: TestTube,
+    image: validationImg,
     title: "Validation",
     description: "Testing and verification",
     color: "from-accent/70 to-highlight",
@@ -61,7 +60,7 @@ const phases = [
     ],
   },
   {
-    icon: Factory,
+    image: productionImg,
     title: "Production",
     description: "Manufacturing and quality control",
     color: "from-highlight to-highlight/70",
@@ -72,7 +71,7 @@ const phases = [
     ],
   },
   {
-    icon: Rocket,
+    image: launchImg,
     title: "Launch",
     description: "Market-ready deployment",
     color: "from-highlight/70 to-primary",
@@ -89,9 +88,10 @@ const phases = [
 export function LifecycleSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative py-24">
       {/* Background */}
       <div
         className="absolute inset-0 opacity-40"
@@ -126,77 +126,100 @@ export function LifecycleSection() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Connection Line - Desktop */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2">
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 1.5, delay: 0.5 }}
-              className="w-full h-full bg-gradient-to-r from-primary via-accent to-highlight origin-left"
-            />
-          </div>
 
           {/* Phases Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-4">
-            {phases.map((phase, index) => (
-              <motion.div
-                key={phase.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                className="relative group"
-              >
-                {/* Card */}
-                <div className="relative p-6 rounded-2xl card transition-all duration-300 text-center h-full">
-                  {/* Pulse effect */}
-                  {/* <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-                    className="absolute top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-xl bg-highlight/20"
-                  /> */}
+          {/* Outer wrapper: fixed height holds layout space. Inner card: absolute, expands freely on hover. */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-4 pb-32">
+            {phases.map((phase, index) => {
+              const isHovered = hoveredIndex === index;
+              return (
+                /* ── OUTER WRAPPER ──────────────────────────────────────────────
+                   Fixed height = collapsed card height.
+                   Stays in document flow → arrows & siblings never shift.     */
+                <motion.div
+                  key={phase.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  className="relative"
+                  style={{ height: "208px" }}       /* fixed collapsed height */
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  {/* ── INNER CARD ────────────────────────────────────────────────
+                      position:absolute so it can grow beyond the wrapper's fixed
+                      height without pushing anything in the grid.               */}
+                  <motion.div
+                    className="absolute inset-x-0 top-0 rounded-2xl card text-center overflow-hidden cursor-default"
+                    animate={{
+                      scale: isHovered ? 1.05 : 1,
+                      boxShadow: isHovered
+                        ? "0 24px 48px -8px rgba(0,0,0,0.35)"
+                        : "0 0px 0px 0px rgba(0,0,0,0)",
+                      zIndex: isHovered ? 30 : 1,
+                    }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    style={{
+                      transformOrigin: "top center",
+                      height: isHovered ? "auto" : "100%",      /* uniform when collapsed, free when hovered */
+                    }}
+                  >
+                    <div className="p-6">
+                      {/* Image */}
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-xl overflow-hidden">
+                        <img
+                          src={phase.image}
+                          alt={phase.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
 
-                  {/* Icon */}
-                  <div className={`relative w-14 h-14 mx-auto rounded-xl bg-gradient-to-br ${phase.color} p-[1px] mb-4`}>
-                    <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
-                      <phase.icon size={24} className="text-highlight" />
+                      {/* Phase Number */}
+                      <span className="text-xs text-muted-foreground mb-2 block">
+                        Phase {index + 1}
+                      </span>
+
+                      {/* Title */}
+                      <h3 className={`font-display font-semibold mb-2 transition-colors ${
+                        isHovered ? "text-highlight" : "text-foreground"
+                      }`}>
+                        {phase.title}
+                      </h3>
+
+                      {/* Description — visible when not hovered */}
+                      <p className={`text-xs text-muted-foreground leading-relaxed transition-all duration-200 ${
+                        isHovered ? "opacity-0 h-0 overflow-hidden mb-0" : "opacity-100"
+                      }`}>
+                        {phase.description}
+                      </p>
+
+                      {/* Bullet points — visible when hovered */}
+                      <motion.ul
+                        initial={false}
+                        animate={isHovered ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="text-xs text-muted-foreground text-left space-y-1.5 overflow-hidden"
+                      >
+                        <div className="pt-1">
+                          {phase.points.map((p, i) => (
+                            <li key={i} className="before:content-['•'] before:mr-2 before:text-highlight list-none">
+                              {p}
+                            </li>
+                          ))}
+                        </div>
+                      </motion.ul>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  {/* Phase Number */}
-                  <span className="text-xs text-muted-foreground mb-2 block">
-                    Phase {index + 1}
-                  </span>
-
-                  {/* Title */}
-                  <h3 className="font-display font-semibold text-foreground mb-2 group-hover:text-highlight transition-colors">
-                    {phase.title}
-                  </h3>
-
-                  {/* Description (hidden on hover) */}
-                  <p className="text-xs text-muted-foreground leading-relaxed group-hover:hidden">
-                    {phase.description}
-                  </p>
-
-                  {/* Points list shown on hover/focus */}
-                  {phase.points && (
-                    <ul className="text-xs text-muted-foreground leading-relaxed hidden group-hover:block text-left mt-2 space-y-1">
-                      {phase.points.map((p, i) => (
-                        <li key={i} className="before:content-['•'] before:mr-2 before:text-highlight">
-                          {p}
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Arrow — Desktop (lives in the outer wrapper, always in flow) */}
+                  {index < phases.length - 1 && (
+                    <div className="hidden lg:flex absolute top-1/2 -right-4 -translate-y-1/2 z-10">
+                      <ArrowRight size={16} className="text-highlight" />
+                    </div>
                   )}
-                </div>
-
-                {/* Arrow - Desktop */}
-                {index < phases.length - 1 && (
-                  <div className="hidden lg:flex absolute top-1/2 -right-4 -translate-y-1/2 z-10">
-                    <ArrowRight size={16} className="text-highlight" />
-                  </div>
-                )}
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
