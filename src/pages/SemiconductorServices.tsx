@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Cpu, ShieldCheck, Microscope, LayoutTemplate, PackageOpen } from "lucide-react";
 
 import ateImg from "@/assets/semiconductor_services/ate_services.png";
 import finalBoardImg from "@/assets/semiconductor_services/final_board.png";
@@ -22,11 +22,11 @@ import kitDocImg from "@/assets/semiconductor_services/kit_documentation.png";
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const navItems = [
-  { id: "ate",           label: "ATE Services" },
-  { id: "reliability",  label: "Reliability & Burn-in" },
-  { id: "ic-char",      label: "IC Characterization" },
-  { id: "reference",    label: "Reference Design" },
-  { id: "turnkey",      label: "Turnkey Build & Kit" },
+  { id: "ate",           label: "ATE Services", icon: Cpu },
+  { id: "reliability",  label: "Reliability & Burn-in", icon: ShieldCheck },
+  { id: "ic-char",      label: "IC Characterization", icon: Microscope },
+  { id: "reference",    label: "Reference Design", icon: LayoutTemplate },
+  { id: "turnkey",      label: "Turnkey Build & Kit", icon: PackageOpen },
 ];
 
 interface AccordionItem {
@@ -185,32 +185,33 @@ function SubServiceCard({ item, index, isGrid }: { item: AccordionItem; index: n
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className={`bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col ${isGrid ? "h-full" : "md:flex-row h-full"}`}
+      className={`group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col ${isGrid ? "h-full" : "md:flex-row h-full"}`}
     >
       {item.image && (
-        <div className={`w-full flex items-center justify-center flex-shrink-0 relative overflow-hidden ${isGrid ? "h-[220px]" : "aspect-video md:aspect-auto md:w-2/5 lg:w-1/3 min-h-[200px]"}`}>
+        <div className={`w-full flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/30 ${isGrid ? "h-[220px] p-6 lg:p-8" : "aspect-video md:aspect-auto md:w-[45%] lg:w-[40%] min-h-[240px] p-6 md:p-10"}`}>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <img
             src={item.image}
             alt={item.title}
-            className="w-full h-full object-contain object-center transition-transform duration-700 hover:scale-105"
+            className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-md relative z-10"
           />
         </div>
       )}
-      <div className="p-6 md:p-8 flex flex-col justify-center flex-1">
-        <h4 className="text-xl font-display font-semibold text-foreground mb-3">
+      <div className={`p-6 md:p-8 lg:p-10 flex flex-col justify-center flex-1 ${!item.image ? "h-full" : ""}`}>
+        <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
           {item.title}
         </h4>
-        <p className="text-muted-foreground leading-relaxed mb-5">
+        <p className="text-muted-foreground leading-relaxed mb-6 text-sm md:text-base">
           {item.intro}
         </p>
         {item.points && item.points.length > 0 && (
-          <ul className="space-y-3 mt-auto">
+          <ul className="space-y-4 mt-auto">
             {item.points.map((p, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                  <Check size={12} strokeWidth={3} />
+              <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
+                <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-300 shadow-sm">
+                  <Check size={14} strokeWidth={2.5} />
                 </span>
-                <span className="leading-snug pt-0.5">{p}</span>
+                <span className="leading-relaxed pt-0.5">{p}</span>
               </li>
             ))}
           </ul>
@@ -248,17 +249,18 @@ function ContentPanel({ section }: { section: Section }) {
         <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4 leading-tight">
           {section.title}
         </h2>
-        <div className="flex flex-col lg:flex-row gap-8 mb-4 items-start">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-6 items-start">
           <p className="flex-1 text-muted-foreground leading-relaxed text-base md:text-lg">
             {section.intro}
           </p>
           {section.image && (
-            <div className="w-full lg:w-5/12 flex-shrink-0">
-              <div className="rounded-2xl overflow-hidden flex items-center justify-center">
+            <div className="w-full lg:w-5/12 flex-shrink-0 relative group">
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl transform rotate-2 scale-[1.02] transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105 -z-10 blur-sm" />
+              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-6 lg:p-8 shadow-lg">
                 <img 
                   src={section.image} 
                   alt={section.title} 
-                  className="w-full h-auto object-contain aspect-video lg:aspect-[4/3] max-h-[320px]" 
+                  className="w-full h-auto object-contain aspect-video lg:aspect-[4/3] max-h-[320px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
                 />
               </div>
             </div>
@@ -272,22 +274,27 @@ function ContentPanel({ section }: { section: Section }) {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.45, delay: 0.1 }}
-          className="rounded-xl border border-border bg-card p-6 mb-8 shadow-card"
+          className="rounded-3xl border border-border/60 bg-gradient-to-br from-card to-muted/20 p-6 md:p-8 lg:p-10 mb-12 shadow-sm hover:shadow-md transition-shadow duration-500"
         >
-          <h3 className="font-display font-semibold text-foreground mb-4 text-sm uppercase tracking-wider text-primary">
-            Key Capabilities
-          </h3>
-          <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+          <div className="flex items-center gap-3 mb-6 sm:mb-8">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shadow-inner">
+              <Check className="text-primary" size={24} strokeWidth={2.5} />
+            </div>
+            <h3 className="font-display font-bold text-foreground text-lg sm:text-xl tracking-tight">
+              Key Capabilities
+            </h3>
+          </div>
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5">
             {section.bullets.map((b, i) => (
               <motion.li
                 key={i}
                 initial={{ opacity: 0, x: -10 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.3, delay: 0.15 + i * 0.05 }}
-                className="flex items-center gap-2.5 text-sm text-muted-foreground"
+                className="flex items-start gap-3.5 text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors group"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                {b}
+                <span className="mt-1.5 flex-shrink-0 w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(var(--primary),0.6)] transition-all duration-300" />
+                <span className="leading-relaxed">{b}</span>
               </motion.li>
             ))}
           </ul>
@@ -413,62 +420,96 @@ const SemiconductorServices = () => {
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
 
             {/* ── SIDEBAR ── */}
-            {/* Mobile: horizontal scrollable tabs */}
-            <div className="w-full lg:hidden overflow-x-auto pb-2">
-              <div className="flex gap-2 min-w-max">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveId(item.id)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-200 border ${
-                      activeId === item.id
-                        ? "bg-primary text-black border-primary"
-                        : "bg-card text-muted-foreground border-border hover:bg-primary/10 hover:text-foreground"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
+            {/* Mobile: Premium Services Grid */}
+            <div className="w-full lg:hidden mb-12 relative z-20">
+              <div className="flex items-center justify-between mb-5 px-1">
+                <h3 className="text-xl font-display font-bold text-foreground flex items-center gap-3">
+                  <div className="w-1.5 h-6 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),0.6)]"></div>
+                  Explore Services
+                </h3>
+                <span className="text-[10px] font-bold px-3 py-1.5 bg-primary/10 text-primary rounded-full uppercase tracking-wider">
+                  {navItems.length} Categories
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {navItems.map((item, idx) => {
+                  const isActive = activeId === item.id;
+                  const isLastOdd = idx === navItems.length - 1 && navItems.length % 2 !== 0;
+                  
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveId(item.id)}
+                      className={`relative flex flex-col items-start justify-between p-5 rounded-[20px] transition-all duration-400 border text-left overflow-hidden group ${
+                        isLastOdd ? "col-span-2" : "col-span-1"
+                      } ${
+                        isActive
+                          ? "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground border-primary/50 shadow-[0_8px_25px_-5px_rgba(var(--primary),0.5)] scale-[1.02] ring-1 ring-primary/30 ring-offset-2 ring-offset-background"
+                          : "bg-card/50 backdrop-blur-sm border-border/80 text-muted-foreground hover:bg-card hover:border-primary/40 hover:shadow-lg hover:-translate-y-0.5"
+                      }`}
+                    >
+                      {isActive && (
+                        <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/20 rounded-full blur-3xl pointer-events-none" />
+                      )}
+                      <div className={`w-10 h-10 rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300 shadow-sm relative ${
+                        isActive 
+                          ? 'bg-primary-foreground/20 text-primary-foreground backdrop-blur-md' 
+                          : 'bg-muted/80 group-hover:bg-primary/10 text-muted-foreground group-hover:text-primary'
+                      }`}>
+                        <item.icon size={20} strokeWidth={isActive ? 2.5 : 2} className={isActive ? "drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]" : "opacity-80"} />
+                        {isActive && (
+                          <motion.div 
+                            layoutId="active-icon-bg"
+                            className="absolute inset-0 rounded-2xl border border-primary-foreground/30 pointer-events-none" 
+                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                          />
+                        )}
+                      </div>
+                      <span className={`text-sm sm:text-base font-bold leading-snug z-10 flex-1 ${isActive ? "text-primary-foreground" : "text-foreground group-hover:text-primary transition-colors"}`}>
+                        {item.label}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Desktop: sticky vertical sidebar */}
-            <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
-              <div className="rounded-xl border border-border bg-card shadow-card overflow-hidden">
-                <div className="px-4 py-3 border-b border-border/60 bg-muted/30">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Services
+            <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-32 self-start">
+              <div className="rounded-3xl border border-border/50 bg-card/80 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+                <div className="px-6 py-5 border-b border-border/40 bg-gradient-to-r from-muted/50 to-transparent">
+                  <p className="text-sm font-bold text-foreground tracking-wide flex items-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),1)]" />
+                    Services Directory
                   </p>
                 </div>
-                <nav className="p-2">
+                <nav className="p-3 space-y-1.5">
                   {navItems.map((item) => {
                     const isActive = activeId === item.id;
                     return (
                       <button
                         key={item.id}
                         onClick={() => setActiveId(item.id)}
-                        className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-left transition-all duration-200 group mb-0.5 ${
+                        className={`relative w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-semibold text-left transition-all duration-300 group ${
                           isActive
-                            ? "bg-primary/10 text-primary"
+                            ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
                             : "text-muted-foreground hover:bg-primary/5 hover:text-foreground"
                         }`}
-                        style={{ transform: "scale(1)" }}
-                        onMouseEnter={(e) =>
-                          !isActive && ((e.currentTarget.style.transform = "scale(1.02)"))
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.transform = "scale(1)")
-                        }
                       >
                         {/* Active indicator bar */}
                         {isActive && (
                           <motion.span
                             layoutId="sidebar-indicator"
-                            className="absolute left-0 top-1 bottom-1 w-[3px] rounded-full bg-primary"
-                            transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                            className="absolute left-2.5 top-2.5 bottom-2.5 w-1 rounded-full bg-primary-foreground/40"
+                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
                           />
                         )}
-                        <span className="ml-1">{item.label}</span>
+                        <span className={`transition-transform duration-300 flex-1 ${isActive ? "ml-3" : "group-hover:translate-x-1"}`}>
+                          {item.label}
+                        </span>
+                        {!isActive && (
+                          <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                        )}
                       </button>
                     );
                   })}
