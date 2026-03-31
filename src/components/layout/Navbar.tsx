@@ -157,19 +157,19 @@ export function Navbar() {
             <div className="flex flex-col items-end mr-2">
               <div className="flex flex-col bg-white/5 border border-default/40 rounded-md px-3 py-1 shadow-sm">
                 <a
-                  href="mailto:hello@senani-tech.com"
+                  href="mailto:praveen@senanitech.com"
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Mail size={14} className="text-muted-foreground" />
-                  <span className="leading-tight">hello@senani-tech.com</span>
+                  <span className="leading-tight">praveen@senanitech.com</span>
                 </a>
 
                 <a
-                  href="tel:+15550100000"
+                  href="tel:+919486470817"
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mt-1"
                 >
                   <Phone size={14} className="text-muted-foreground" />
-                  <span className="leading-tight">+1 (555) 010-0000</span>
+                  <span className="leading-tight">+91 9486470817</span>
                 </a>
               </div>
             </div>
@@ -218,19 +218,19 @@ export function Navbar() {
                   <div className="mb-4">
                     <div className="flex flex-col bg-white/5 border border-default/40 rounded-md px-4 py-3 shadow-sm">
                       <a
-                        href="mailto:hello@senani-tech.com"
+                        href="mailto:praveen@senanitech.com"
                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <Mail size={16} className="text-muted-foreground" />
-                        <span className="leading-tight">hello@senani-tech.com</span>
+                        <span className="leading-tight">praveen@senanitech.com</span>
                       </a>
 
                       <a
-                        href="tel:+15550100000"
+                        href="tel:+919486470817"
                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mt-2"
                       >
                         <Phone size={16} className="text-muted-foreground" />
-                        <span className="leading-tight">+1 (555) 010-0000</span>
+                        <span className="leading-tight">+91 9486470817</span>
                       </a>
                     </div>
                   </div>

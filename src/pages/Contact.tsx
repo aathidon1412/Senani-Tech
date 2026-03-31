@@ -115,7 +115,7 @@ const Contact = () => {
                       <label className="block text-sm font-medium mb-2">Phone (Optional)</label>
                       <Input 
                         type="tel" 
-                        placeholder="+1 (555) 123-4567"
+                        placeholder="+91 9486470817"
                         className="bg-muted/50 border-border focus:border-highlight"
                       />
                     </div>
@@ -170,7 +170,7 @@ const Contact = () => {
                   <h3 className="font-display font-semibold mb-4">Quick Contact</h3>
                   <div className="space-y-4">
                     <a 
-                      href="mailto:info@senanitech.com"
+                      href="mailto:praveen@senanitech.com"
                       className="flex items-center gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
                     >
                       <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center">
@@ -178,12 +178,12 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="text-sm text-muted-foreground">Email</div>
-                        <div className="font-medium text-black">info@senanitech.com</div>
+                        <div className="font-medium text-black">praveen@senanitech.com</div>
                       </div>
                     </a>
                     
                     <a 
-                      href="tel:+15551234567"
+                      href="tel:+919486470817"
                       className="flex items-center gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
                     >
                       <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center">
@@ -191,7 +191,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="text-sm text-muted-foreground">Phone</div>
-                        <div className="font-medium text-black">+1 (555) 123-4567</div>
+                        <div className="font-medium text-black">+91 9486470817</div>
                       </div>
                     </a>
                   </div>
@@ -206,13 +206,13 @@ const Contact = () => {
                         <Building size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="font-medium">R&D Division - Coimbatore</div>
+                        <div className="font-medium">R&D Division</div>
                         <div className="text-sm text-muted-foreground mt-1">
-                          Research & Development Hub
+                          Sona Incubation Foundation 2nd floor, Sri Valliappa Block,
                         </div>
                         <div className="text-xs text-muted-foreground mt-2">
-                          Innovation Center, Tech Park<br />
-                          Coimbatore, Tamil Nadu, India
+                          Junction Main Road<br />
+                          Salem - 636005, Tamil Nadu, India
                         </div>
                       </div>
                     </div>
@@ -222,13 +222,13 @@ const Contact = () => {
                         <Factory size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="font-medium">Manufacturing - Chennai</div>
+                        <div className="font-medium">Manufacturing</div>
                         <div className="text-sm text-muted-foreground mt-1">
-                          Production Facility
+                          SENANITECH PRIVATE LIMITED
                         </div>
                         <div className="text-xs text-muted-foreground mt-2">
-                          Industrial Estate<br />
-                          Chennai, Tamil Nadu, India
+                          No:15, Corporation Road Seevaram Perungudi<br />
+                          Chennai, Tamil Nadu - 600096. India.
                         </div>
                       </div>
                     </div>

@@ -24,11 +24,11 @@ const footerLinks = {
     { name: "Contact", path: "/contact" },
   ],
   contact: {
-    email: "info@senanitech.com",
-    phone: "+1 (555) 123-4567",
+    email: "praveen@senanitech.com",
+    phone: "+91 9486470817",
     locations: [
-      { name: "Coimbatore (R&D)", address: "Research & Development Hub" },
-      { name: "Chennai (Manufacturing)", address: "Production Facility" },
+      { name: "R&D Division", address: "Salem, Tamil Nadu, India" },
+      { name: "Manufacturing", address: "Chennai, Tamil Nadu, India" },
     ],
   },
 };
@@ -64,7 +64,7 @@ export function Footer() {
                 <Linkedin size={18} className="text-muted-foreground group-hover:text-highlight transition-colors" />
               </a>
               <a
-                href="mailto:info@senanitech.com"
+                href="mailto:praveen@senanitech.com"
                 className="w-10 h-10 rounded-lg bg-muted hover:bg-primary/20 transition-colors flex items-center justify-center group"
               >
                 <Mail size={18} className="text-muted-foreground group-hover:text-highlight transition-colors" />
