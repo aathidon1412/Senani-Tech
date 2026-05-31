@@ -185,29 +185,29 @@ function SubServiceCard({ item, index }: { item: AccordionItem; index: number })
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col md:flex-row items-center md:items-stretch"
+      className="group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col p-6 md:p-8 lg:p-10"
     >
-      {item.image && (
-        <div className="w-full md:w-32 lg:w-40 flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/20 p-4 min-h-[100px]">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <img
-            src={item.image}
-            alt={item.title}
-            className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-sm relative z-10"
-          />
-        </div>
-      )}
-      
-      <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center flex-1 w-full">
-        <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-          {item.title}
-        </h4>
-        <p className={`text-muted-foreground leading-relaxed text-sm md:text-base ${item.points && item.points.length > 0 ? '' : 'mb-0'}`}>
-          {item.intro}
-        </p>
+      <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+        {item.title}
+      </h4>
+      <p className={`text-muted-foreground leading-relaxed text-sm md:text-base ${item.points && item.points.length > 0 || item.image ? 'mb-6' : 'mb-0'}`}>
+        {item.intro}
+      </p>
+
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mt-auto">
+        {item.image && (
+          <div className="w-48 h-48 mx-auto md:mx-0 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/20 rounded-2xl p-4 md:p-5">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-sm relative z-10"
+            />
+          </div>
+        )}
         
         {item.points && item.points.length > 0 && (
-          <ul className="space-y-4 mt-6">
+          <ul className="space-y-4 flex-1">
             {item.points.map((p, i) => (
               <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
                 <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">

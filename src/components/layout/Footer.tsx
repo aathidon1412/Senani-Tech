@@ -42,15 +42,15 @@ export function Footer() {
     <footer className="relative bg-secondary/50 border-t border-border overflow-hidden">
       {/* Background Pattern removed per request (no blur/overlay) */}
 
-      <div className="container mx-auto px-4 py-16 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 py-8 md:py-16 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Brand Column */}
           <div className="flex flex-col">
             <Link to="/" className="inline-flex items-center gap-3 no-underline mb-2">
-              <img src={logoShort} alt="SenaniTech Icon" className="w-16 h-16 sm:w-18 sm:h-18 object-contain flex-shrink-0" />
-              <img src={logoLong} alt="SenaniTech" className="h-18 sm:h-28 w-auto max-w-[320px] sm:max-w-[380px] object-contain" />
+              <img src={logoShort} alt="SenaniTech Icon" className="w-20 h-20 sm:w-24 sm:h-24 object-contain flex-shrink-0" />
+              <img src={logoLong} alt="SenaniTech" className="h-20 sm:h-24 w-auto max-w-[300px] sm:max-w-[360px] object-contain" />
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6 mt-4">
               Your worldwide partner in semiconductor and electronics engineering excellence.
               Bringing ideas from mind to market.
             </p>
@@ -155,8 +155,8 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-muted-foreground text-sm">
+        <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-muted-foreground text-sm text-center md:text-left">
             © {new Date().getFullYear()} SenaniTech Inc. All rights reserved.
           </p>
           <motion.button

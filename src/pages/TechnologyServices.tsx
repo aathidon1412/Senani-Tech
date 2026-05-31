@@ -150,7 +150,7 @@ function SubServiceCard({ item, index, isGrid }: { item: AccordionItem; index: n
 
       <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mt-auto">
         {item.image && (
-          <div className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/20 rounded-2xl p-4 md:p-5">
+          <div className="w-48 h-48 mx-auto md:mx-0 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/20 rounded-2xl p-4 md:p-5">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <img
               src={item.image}
