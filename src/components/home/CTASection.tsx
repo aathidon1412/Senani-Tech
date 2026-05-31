@@ -96,7 +96,7 @@ export function CTASection() {
           >
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-highlight" />
-              100+ Years Combined Experience
+              30+ Years Combined Experience
             </span>
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-highlight" />

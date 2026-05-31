@@ -54,7 +54,7 @@ const About = () => {
       
       <main>
         {/* Hero Section */}
-        <section ref={heroRef} className="relative pt-32 pb-20 overflow-hidden">
+        <section ref={heroRef} className="relative pt-32 pb-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
           <div className="absolute inset-0 circuit-pattern opacity-20" />
           
@@ -68,12 +68,12 @@ const About = () => {
               <span className="inline-block px-4 py-1.5 rounded-full card text-sm text-muted-foreground mb-6">
                 About SenaniTech
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+              <h1 className="text-4xl md:text-4xl lg:text-5xl font-display font-bold mb-6">
                 Bringing your ideas from{" "}
                 <span className="gradient-text-bright">mind to market</span>
               </h1>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                With over 100 years of combined experience, we are your trusted partner
+              <p className="text-lg text-muted-foreground mb-4 max-w-2xl mx-auto">
+                With over 30 years of combined experience, we are your trusted partner
                 in semiconductor and electronics engineering excellence
               </p>
             </motion.div>
@@ -81,12 +81,12 @@ const About = () => {
         </section>
 
         {/* Values Section */}
-        <section ref={valuesRef} className="py-24 bg-secondary/20">
+        <section ref={valuesRef} className="pb-16 pt-0 bg-secondary/20">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={valuesInView ? { opacity: 1, y: 0 } : {}}
-              className="text-center mb-16"
+              className="text-center mb-12"
             >
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
                 Our Core <span className="gradient-text-bright">Values</span>
@@ -122,7 +122,7 @@ const About = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl font-display font-bold mb-6">
-                  <span className="gradient-text-bright">15+</span> Industry Experts
+                  <span className="gradient-text-bright">10+</span> Industry Experts
                 </h2>
                 <p className="text-muted-foreground mb-6">
                   Our team brings together decades of experience from leading semiconductor

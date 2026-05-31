@@ -178,37 +178,39 @@ const sections: Section[] = [
 
 // ─── Sub-Service Card ─────────────────────────────────────────────────────────
 
-function SubServiceCard({ item, index, isGrid }: { item: AccordionItem; index: number; isGrid?: boolean }) {
+function SubServiceCard({ item, index }: { item: AccordionItem; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className={`group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col ${isGrid ? "h-full" : "md:flex-row h-full"}`}
+      className="group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col md:flex-row items-center md:items-stretch"
     >
       {item.image && (
-        <div className={`w-full flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/30 ${isGrid ? "h-[220px] p-6 lg:p-8" : "aspect-video md:aspect-auto md:w-[45%] lg:w-[40%] min-h-[240px] p-6 md:p-10"}`}>
+        <div className="w-full md:w-32 lg:w-40 flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/20 p-4 min-h-[100px]">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <img
             src={item.image}
             alt={item.title}
-            className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-md relative z-10"
+            className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-sm relative z-10"
           />
         </div>
       )}
-      <div className={`p-6 md:p-8 lg:p-10 flex flex-col justify-center flex-1 ${!item.image ? "h-full" : ""}`}>
+      
+      <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center flex-1 w-full">
         <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
           {item.title}
         </h4>
-        <p className="text-muted-foreground leading-relaxed mb-6 text-sm md:text-base">
+        <p className={`text-muted-foreground leading-relaxed text-sm md:text-base ${item.points && item.points.length > 0 ? '' : 'mb-0'}`}>
           {item.intro}
         </p>
+        
         {item.points && item.points.length > 0 && (
-          <ul className="space-y-4 mt-auto">
+          <ul className="space-y-4 mt-6">
             {item.points.map((p, i) => (
               <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
-                <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-300 shadow-sm">
+                <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">
                   <Check size={14} strokeWidth={2.5} />
                 </span>
                 <span className="leading-relaxed pt-0.5">{p}</span>
@@ -254,13 +256,13 @@ function ContentPanel({ section }: { section: Section }) {
             {section.intro}
           </p>
           {section.image && (
-            <div className="w-full lg:w-5/12 flex-shrink-0 relative group">
+            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0">
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl transform rotate-2 scale-[1.02] transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105 -z-10 blur-sm" />
-              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-6 lg:p-8 shadow-lg">
+              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-5 shadow-lg">
                 <img 
                   src={section.image} 
                   alt={section.title} 
-                  className="w-full h-auto object-contain aspect-video lg:aspect-[4/3] max-h-[320px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
+                  className="w-full h-auto object-contain aspect-square max-h-[160px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
                 />
               </div>
             </div>
@@ -309,24 +311,14 @@ function ContentPanel({ section }: { section: Section }) {
           transition={{ duration: 0.45, delay: 0.2 }}
           className="mt-12 space-y-6"
         >
-          <h3 className="font-display font-semibold text-foreground text-xl md:text-2xl mb-2">
+          <h3 className="font-display font-semibold text-foreground text-xl md:text-2xl mb-4">
             {section.id === "turnkey" ? "Key Elements" : "Sub-Services"}
           </h3>
-          {section.id === "turnkey" ? (
-            <div className="flex flex-wrap justify-center gap-6">
-              {section.accordions.map((acc, i) => (
-                <div key={acc.title} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
-                  <SubServiceCard item={acc} index={i} isGrid />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-6">
-              {section.accordions.map((acc, i) => (
-                <SubServiceCard key={acc.title} item={acc} index={i} />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 gap-6">
+            {section.accordions.map((acc, i) => (
+              <SubServiceCard key={acc.title} item={acc} index={i} />
+            ))}
+          </div>
         </motion.div>
       )}
 

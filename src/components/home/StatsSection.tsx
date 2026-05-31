@@ -5,28 +5,28 @@ import { Users, Award, CircuitBoard, Package } from "lucide-react";
 const stats = [
   {
     icon: Award,
-    value: 100,
+    value: 30,
     suffix: "+",
     label: "Years Combined Experience",
     description: "Industry expertise across our team",
   },
   {
     icon: Users,
-    value: 15,
+    value: 10,
     suffix: "+",
     label: "Industry Experts",
     description: "Dedicated engineering professionals",
   },
   {
     icon: CircuitBoard,
-    value: 150,
+    value: 50,
     suffix: "+",
     label: "Designs Delivered",
     description: "Successful product implementations",
   },
   {
     icon: Package,
-    value: 100,
+    value: 10,
     suffix: "+",
     label: "Products to Market",
     description: "From concept to production",

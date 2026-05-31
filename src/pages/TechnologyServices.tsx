@@ -139,27 +139,29 @@ function SubServiceCard({ item, index, isGrid }: { item: AccordionItem; index: n
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className={`group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col ${isGrid ? "h-full" : "md:flex-row h-full"}`}
+      className="group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col p-6 md:p-8 lg:p-10"
     >
-      {item.image && (
-        <div className={`w-full flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/30 ${isGrid ? "h-[220px] p-6 lg:p-8" : "aspect-video md:aspect-auto md:w-[45%] lg:w-[40%] min-h-[240px] p-6 md:p-10"}`}>
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <img
-            src={item.image}
-            alt={item.title}
-            className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-md relative z-10"
-          />
-        </div>
-      )}
-      <div className={`p-6 md:p-8 lg:p-10 flex flex-col justify-center flex-1 ${!item.image ? "h-full" : ""}`}>
-        <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-          {item.title}
-        </h4>
-        <p className="text-muted-foreground leading-relaxed mb-6 text-sm md:text-base">
-          {item.intro}
-        </p>
+      <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+        {item.title}
+      </h4>
+      <p className="text-muted-foreground leading-relaxed mb-6 text-sm md:text-base">
+        {item.intro}
+      </p>
+
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mt-auto">
+        {item.image && (
+          <div className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/20 rounded-2xl p-4 md:p-5">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-sm relative z-10"
+            />
+          </div>
+        )}
+        
         {item.points && item.points.length > 0 && (
-          <ul className="space-y-4 mt-auto">
+          <ul className="space-y-4 flex-1">
             {item.points.map((p, i) => (
               <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
                 <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-300 shadow-sm">
@@ -215,13 +217,13 @@ function ContentPanel({ section }: { section: Section }) {
             )}
           </div>
           {section.image && (
-            <div className="w-full lg:w-5/12 flex-shrink-0 relative group">
+            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0">
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl transform rotate-2 scale-[1.02] transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105 -z-10 blur-sm" />
-              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-6 lg:p-8 shadow-lg">
+              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-5 shadow-lg">
                 <img 
                   src={section.image} 
                   alt={section.title} 
-                  className="w-full h-auto object-contain aspect-video lg:aspect-[4/3] max-h-[320px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
+                  className="w-full h-auto object-contain aspect-square max-h-[160px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
                 />
               </div>
             </div>

@@ -45,18 +45,18 @@ export function Footer() {
       <div className="container mx-auto px-4 py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
-          <div className="space-y-6">
-            <Link to="/" className="inline-flex items-center gap-3 no-underline">
-              <img src={logoShort} alt="SenaniTech Icon" className="w-10 h-10 sm:w-14 sm:h-14 object-contain flex-shrink-0" />
-              <img src={logoLong} alt="SenaniTech" className="h-8 sm:h-12 w-auto object-contain" />
+          <div className="flex flex-col">
+            <Link to="/" className="inline-flex items-center gap-3 no-underline mb-2">
+              <img src={logoShort} alt="SenaniTech Icon" className="w-16 h-16 sm:w-18 sm:h-18 object-contain flex-shrink-0" />
+              <img src={logoLong} alt="SenaniTech" className="h-18 sm:h-28 w-auto max-w-[320px] sm:max-w-[380px] object-contain" />
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               Your worldwide partner in semiconductor and electronics engineering excellence.
               Bringing ideas from mind to market.
             </p>
             <div className="flex gap-3">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/senanitech"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-muted hover:bg-primary/20 transition-colors flex items-center justify-center group"

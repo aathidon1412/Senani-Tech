@@ -152,13 +152,13 @@ function ContentPanel({ section }: { section: Section }) {
             </p>
           </div>
           {section.image && (
-            <div className="w-full lg:w-5/12 flex-shrink-0 relative group">
+            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0">
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl transform rotate-2 scale-[1.02] transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105 -z-10 blur-sm" />
-              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-6 lg:p-8 shadow-lg">
+              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-5 shadow-lg">
                 <img 
                   src={section.image} 
                   alt={section.title} 
-                  className="w-full h-auto object-contain aspect-video lg:aspect-[4/3] max-h-[320px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
+                  className="w-full h-auto object-contain aspect-square max-h-[160px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
                 />
               </div>
             </div>
