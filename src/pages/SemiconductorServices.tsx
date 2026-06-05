@@ -196,27 +196,40 @@ function SubServiceCard({ item, index }: { item: AccordionItem; index: number })
 
       <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mt-auto">
         {item.image && (
-          <div className="w-48 h-48 mx-auto md:mx-0 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative overflow-hidden bg-muted/20 rounded-2xl p-4 md:p-5">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="w-48 h-48 mx-auto md:mx-0 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative">
             <img
               src={item.image}
               alt={item.title}
-              className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 drop-shadow-sm relative z-10"
+              className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
             />
           </div>
         )}
         
         {item.points && item.points.length > 0 && (
-          <ul className="space-y-4 flex-1">
-            {item.points.map((p, i) => (
-              <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
-                <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">
-                  <Check size={14} strokeWidth={2.5} />
-                </span>
-                <span className="leading-relaxed pt-0.5">{p}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 flex-1 w-full">
+            <ul className="space-y-4">
+              {item.points.slice(0, 4).map((p, i) => (
+                <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
+                  <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">
+                    <Check size={14} strokeWidth={2.5} />
+                  </span>
+                  <span className="leading-relaxed pt-0.5">{p}</span>
+                </li>
+              ))}
+            </ul>
+            {item.points.length > 4 && (
+              <ul className="space-y-4">
+                {item.points.slice(4).map((p, i) => (
+                  <li key={i + 4} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
+                    <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">
+                      <Check size={14} strokeWidth={2.5} />
+                    </span>
+                    <span className="leading-relaxed pt-0.5">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
       </div>
     </motion.div>
@@ -256,15 +269,12 @@ function ContentPanel({ section }: { section: Section }) {
             {section.intro}
           </p>
           {section.image && (
-            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl transform rotate-2 scale-[1.02] transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105 -z-10 blur-sm" />
-              <div className="rounded-3xl overflow-hidden flex items-center justify-center bg-card/80 backdrop-blur-sm border border-border/50 p-5 shadow-lg">
-                <img 
-                  src={section.image} 
-                  alt={section.title} 
-                  className="w-full h-auto object-contain aspect-square max-h-[160px] transition-transform duration-700 group-hover:scale-105 drop-shadow-lg" 
-                />
-              </div>
+            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0 flex items-center justify-center">
+              <img 
+                src={section.image} 
+                alt={section.title} 
+                className="w-full h-auto object-contain aspect-square max-h-[180px] transition-transform duration-700 group-hover:scale-105" 
+              />
             </div>
           )}
         </div>

@@ -206,29 +206,28 @@ const Contact = () => {
                         <Building size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="font-medium">R&D Division</div>
+                        <div className="font-medium">Engineering Delivery Center</div>
                         <div className="text-sm text-muted-foreground mt-1">
-                          Sona Incubation Foundation 2nd floor, Sri Valliappa Block,
+                          SENANITECH
                         </div>
                         <div className="text-xs text-muted-foreground mt-2">
-                          Junction Main Road<br />
-                          Salem - 636005, Tamil Nadu, India
+                          2nd floor, Sona Valliappa Block,<br />
+                          Junction Main Rd, Salem,<br />
+                          Tamil Nadu 636005.
                         </div>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-4 p-4 rounded-xl bg-muted/50">
                       <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center flex-shrink-0">
-                        <Factory size={20} className="text-white" />
+                        <Building size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="font-medium">Manufacturing</div>
-                        <div className="text-sm text-muted-foreground mt-1">
-                          SENANITECH PRIVATE LIMITED
-                        </div>
+                        <div className="font-medium">Registered Address</div>
                         <div className="text-xs text-muted-foreground mt-2">
-                          No:15, Corporation Road Seevaram Perungudi<br />
-                          Chennai, Tamil Nadu - 600096. India.
+                          212-6(3), Thirumalai Nagar, Narasothipatty,<br />
+                          Alagapuram, Salem,<br />
+                          Tamil Nadu - 636004
                         </div>
                       </div>
                     </div>
