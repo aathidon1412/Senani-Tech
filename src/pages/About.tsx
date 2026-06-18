@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
@@ -11,8 +11,17 @@ import {
   Zap,
   ArrowRight,
   Building,
-  Globe
+  Globe,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
+
+import boschLogo from "@/assets/trusted-by/bosch.webp";
+import bynetLogo from "@/assets/trusted-by/bynet.png";
+import globalchipLogo from "@/assets/trusted-by/globalchipindustrial.png";
+import healthcubeLogo from "@/assets/trusted-by/healthcube.png";
+import neurostellerLogo from "@/assets/trusted-by/neurosteller.png";
+import techventuresLogo from "@/assets/trusted-by/techventures.png";
 
 const values = [
   {
@@ -37,9 +46,82 @@ const values = [
   }
 ];
 
-const clients = [
-  "Bosch", "Neurostellar", "BYNET", "HealthCube", "TechVentures", "GlobalChip"
+const clientLogos = [
+  { name: "Bosch", logo: boschLogo },
+  { name: "Neurostellar", logo: neurostellerLogo },
+  { name: "BYNET", logo: bynetLogo },
+  { name: "HealthCube", logo: healthcubeLogo },
+  { name: "TechVentures", logo: techventuresLogo },
+  { name: "GlobalChip", logo: globalchipLogo },
 ];
+
+const ClientCarousel = () => {
+  const [startIndex, setStartIndex] = useState(0);
+
+  const nextSlide = () => {
+    setStartIndex((prev) => (prev + 1) % clientLogos.length);
+  };
+
+  const prevSlide = () => {
+    setStartIndex((prev) => (prev - 1 + clientLogos.length) % clientLogos.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="p-6 md:p-8 rounded-2xl card relative overflow-hidden group">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="font-display font-semibold text-foreground m-0">Trusted by Industry Leaders</h3>
+        <div className="flex gap-2">
+          <button 
+            onClick={prevSlide}
+            className="w-9 h-9 rounded-xl border border-border bg-card hover:bg-primary/10 text-muted-foreground hover:text-primary flex items-center justify-center transition-all shadow-sm"
+            aria-label="Previous client"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button 
+            onClick={nextSlide}
+            className="w-9 h-9 rounded-xl border border-border bg-card hover:bg-primary/10 text-muted-foreground hover:text-primary flex items-center justify-center transition-all shadow-sm"
+            aria-label="Next client"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative w-full overflow-hidden py-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center w-full">
+          {[0, 1, 2].map((offset) => {
+            const index = (startIndex + offset) % clientLogos.length;
+            const client = clientLogos[index];
+            const visibilityClass = offset === 2 ? "hidden md:flex" : "flex";
+
+            return (
+              <motion.div
+                key={`${client.name}-${offset}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className={`${visibilityClass} items-center justify-center p-4 h-20 bg-muted/40 backdrop-blur-sm rounded-2xl border border-border/40 shadow-inner hover:bg-card hover:shadow-md hover:border-primary/20 transition-all duration-300`}
+              >
+                <img 
+                  src={client.logo} 
+                  alt={client.name} 
+                  className="max-h-full max-w-full object-contain filter grayscale dark:invert-0 opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                />
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const About = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -141,19 +223,7 @@ const About = () => {
                 </div>
               </div>
               
-              <div className="p-8 rounded-2xl card">
-                <h3 className="font-display font-semibold mb-6">Trusted by Industry Leaders</h3>
-                <div className="flex flex-wrap gap-3">
-                  {clients.map((client) => (
-                    <span
-                      key={client}
-                      className="px-4 py-2 rounded-lg bg-muted text-foreground text-sm font-medium"
-                    >
-                      {client}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <ClientCarousel />
             </div>
           </div>
         </section>

@@ -27,8 +27,14 @@ const footerLinks = {
     email: "praveen@senanitech.com",
     phone: "+91 9486470817",
     locations: [
-      { name: "R&D Division", address: "Salem, Tamil Nadu, India" },
-      { name: "Manufacturing", address: "Chennai, Tamil Nadu, India" },
+      { 
+        name: "Engineering Delivery Center", 
+        address: "SENANITECH\n2nd floor, Sona Valliappa Block,\nJunction Main Rd, Salem,\nTamil Nadu 636005" 
+      },
+      { 
+        name: "Registered Address", 
+        address: "212-6(3), Thirumalai Nagar,\nNarasothipatty, Alagapuram,\nSalem, Tamil Nadu - 636004" 
+      },
     ],
   },
 };
@@ -145,7 +151,7 @@ export function Footer() {
                     <MapPin size={14} className="text-primary mt-0.5 shrink-0" />
                     <div>
                       <span className="text-foreground font-medium">{location.name}</span>
-                      <p className="text-muted-foreground">{location.address}</p>
+                      <p className="text-muted-foreground whitespace-pre-line">{location.address}</p>
                     </div>
                   </div>
                 </li>
