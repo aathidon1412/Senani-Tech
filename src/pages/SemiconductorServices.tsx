@@ -324,11 +324,11 @@ function ContentPanel({ section }: { section: Section }) {
             </p>
           </div>
           {section.image && (
-            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0 flex items-center justify-center lg:mt-8">
+            <div className="w-full max-w-[280px] md:max-w-[320px] flex-shrink-0 relative group mx-auto lg:mx-0 flex items-center justify-center lg:mt-8">
               <img 
                 src={section.image} 
                 alt={section.title} 
-                className="w-full h-auto object-contain aspect-square max-h-[180px] transition-transform duration-700 group-hover:scale-105" 
+                className="w-full h-auto object-contain max-h-[280px] md:max-h-[320px] transition-transform duration-700 group-hover:scale-105" 
               />
             </div>
           )}

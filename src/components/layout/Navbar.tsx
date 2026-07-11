@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Mail, Phone } from "lucide-react";
@@ -29,6 +29,8 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownTrigger, setDropdownTrigger] = useState<"hover" | "click" | null>(null);
+  const desktopNavRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -42,7 +44,51 @@ export function Navbar() {
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
+    setDropdownTrigger(null);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownTrigger === "click" &&
+        desktopNavRef.current &&
+        !desktopNavRef.current.contains(event.target as Node)
+      ) {
+        setActiveDropdown(null);
+        setDropdownTrigger(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [dropdownTrigger]);
+
+  const handleMouseEnter = (name: string) => {
+    if (dropdownTrigger !== "click") {
+      setActiveDropdown(name);
+      setDropdownTrigger("hover");
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (dropdownTrigger === "hover") {
+      setActiveDropdown(null);
+      setDropdownTrigger(null);
+    }
+  };
+
+  const handleDropdownClick = (name: string) => {
+    if (activeDropdown === name) {
+      if (dropdownTrigger === "hover") {
+        setDropdownTrigger("click");
+      } else {
+        setActiveDropdown(null);
+        setDropdownTrigger(null);
+      }
+    } else {
+      setActiveDropdown(name);
+      setDropdownTrigger("click");
+    }
+  };
 
   return (
     <motion.header
@@ -81,23 +127,22 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden xl:flex items-center gap-2 justify-center">
+          <div
+            ref={desktopNavRef}
+            className="hidden xl:flex items-center gap-2 justify-center"
+          >
             {navItems.map((item) => (
               <div
                 key={item.name}
                 className="relative"
                 onMouseEnter={() =>
-                  item.dropdown && setActiveDropdown(item.name)
+                  item.dropdown && handleMouseEnter(item.name)
                 }
-                onMouseLeave={() => setActiveDropdown(null)}
+                onMouseLeave={() => handleMouseLeave()}
               >
                 {item.dropdown ? (
                   <button
-                    onClick={() =>
-                      setActiveDropdown(
-                        activeDropdown === item.name ? null : item.name,
-                      )
-                    }
+                    onClick={() => handleDropdownClick(item.name)}
                     className={cn(
                       "px-4 py-2.5 rounded-lg text-base sm:text-lg font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer",
                       activeDropdown === item.name
@@ -282,11 +327,7 @@ export function Navbar() {
                     >
                       {item.dropdown ? (
                         <button
-                          onClick={() =>
-                            setActiveDropdown(
-                              activeDropdown === item.name ? null : item.name,
-                            )
-                          }
+                          onClick={() => handleDropdownClick(item.name)}
                           className={cn(
                             "w-full text-left flex items-center justify-between px-3 py-3 rounded-lg text-lg font-medium transition-all",
                             activeDropdown === item.name

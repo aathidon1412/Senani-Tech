@@ -32,12 +32,12 @@ const footerLinks = {
       {
         name: "Engineering Delivery Center",
         address:
-          "SENANITECH\n2nd floor, Sona Valliappa Block,\nJunction Main Rd, Salem,\nTamil Nadu - 636005",
+          "SENANITECH\n2nd floor, Sona Valliappa Block,\nJunction Main Rd, Salem,\nTamil Nadu - 636005.",
       },
       {
         name: "Registered Address",
         address:
-          "SENANITECH\n212-6(3), Thirumalai Nagar,\nNarasothipatty, Alagapuram,\nSalem, Tamil Nadu - 636004",
+          "SENANITECH\n212-6(3), Thirumalai Nagar,\nNarasothipatty, Alagapuram,\nSalem, Tamil Nadu - 636004.",
       },
     ],
   },

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import {
   Factory,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import loadingLogo from "@/assets/loading_logo.png";
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,15 +28,44 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      message: formData.get("message"),
+    };
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message.");
+      }
+
+      setIsSubmitted(true);
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you within 24 hours.",
+      });
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      toast({
+        variant: "destructive",
+        title: "Error sending message",
+        description: error.message || "Something went wrong. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -78,7 +108,7 @@ const Contact = () => {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="p-8 rounded-2xl card"
+                className="p-8 rounded-2xl card relative overflow-hidden"
               >
                 <h2 className="text-2xl font-display font-bold mb-6">
                   Send us a message
@@ -103,6 +133,7 @@ const Contact = () => {
                           Name
                         </label>
                         <Input
+                          name="name"
                           placeholder="Your name"
                           required
                           className="bg-muted/50 border-border focus:border-highlight"
@@ -113,6 +144,7 @@ const Contact = () => {
                           Email
                         </label>
                         <Input
+                          name="email"
                           type="email"
                           placeholder="your@email.com"
                           required
@@ -126,6 +158,7 @@ const Contact = () => {
                         Phone (Optional)
                       </label>
                       <Input
+                        name="phone"
                         type="tel"
                         placeholder="+91 9876543210"
                         className="bg-muted/50 border-border focus:border-highlight"
@@ -137,6 +170,7 @@ const Contact = () => {
                         Message
                       </label>
                       <Textarea
+                        name="message"
                         placeholder="Tell us about your project..."
                         rows={5}
                         required
@@ -151,29 +185,48 @@ const Contact = () => {
                       className="w-full"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? (
-                        <span className="flex items-center gap-2">
-                          <motion.span
-                            animate={{ rotate: 360 }}
-                            transition={{
-                              duration: 1,
-                              repeat: Infinity,
-                              ease: "linear",
-                            }}
-                          >
-                            ⏳
-                          </motion.span>
-                          Sending...
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          Send Message
-                          <Send size={18} />
-                        </span>
-                      )}
+                      <span className="flex items-center gap-2">
+                        {isSubmitting ? "Sending..." : "Send Message"}
+                        <Send size={18} />
+                      </span>
                     </Button>
                   </form>
                 )}
+
+                <AnimatePresence>
+                  {isSubmitting && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center z-30"
+                    >
+                      <div className="relative w-28 h-28 flex items-center justify-center mb-6">
+                        <div className="absolute inset-0 rounded-full border-4 border-[#545454]/10" />
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                          className="absolute inset-0 rounded-full border-4 border-t-[#545454] border-r-transparent border-b-transparent border-l-transparent"
+                        />
+                        <img
+                          src={loadingLogo}
+                          alt="Loading logo"
+                          className="w-16 h-16 object-contain relative z-10"
+                        />
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground mb-1">
+                        Sending Message
+                      </h3>
+                      <p className="text-sm text-muted-foreground text-center px-6">
+                        Please wait while we connect to the server...
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
 
               {/* Contact Info */}
@@ -266,7 +319,7 @@ const Contact = () => {
                           <br />
                           Alagapuram, Salem,
                           <br />
-                          Tamil Nadu - 636004
+                          Tamil Nadu - 636004.
                         </div>
                       </div>
                     </div>
