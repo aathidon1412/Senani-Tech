@@ -45,7 +45,7 @@ export function CapabilitiesSection() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-24 overflow-hidden bg-secondary/20">
+    <section className="relative py-12 md:py-16 overflow-hidden bg-secondary/20">
       <div className="absolute inset-0 circuit-pattern opacity-10" />
       
       <div className="container mx-auto px-4 relative" ref={containerRef}>

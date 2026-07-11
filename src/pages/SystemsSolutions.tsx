@@ -5,15 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Activity, Zap, Code2, Factory, ShieldCheck, Wrench, Cpu, LayoutGrid } from "lucide-react";
-
-import hardwareImg from "@/assets/system-solns/comprehensive_capablities/hardware_designs.png";
-import simulationsImg from "@/assets/system-solns/comprehensive_capablities/simulations.png";
-import fpgaImg from "@/assets/system-solns/comprehensive_capablities/fpga_design.png";
-import embeddedImg from "@/assets/system-solns/comprehensive_capablities/embedded_software.png";
-import mechanicalImg from "@/assets/system-solns/comprehensive_capablities/mechanical_and_thermal_capablity.png";
-import validationImg from "@/assets/system-solns/comprehensive_capablities/product_bring_up_and_violation.png";
-import productionImg from "@/assets/system-solns/comprehensive_capablities/product_build.png";
-
+import productImg from "@/assets/system_solutions/product.png";
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const navItems = [
@@ -29,7 +21,7 @@ const navItems = [
 interface Section {
   id: string;
   title: string;
-  image?: string;
+  icon: React.ElementType;
   bullets: string[];
 }
 
@@ -37,7 +29,7 @@ const sections: Section[] = [
   {
     id: "hardware",
     title: "Hardware Design",
-    image: hardwareImg,
+    icon: Cpu,
     bullets: [
       "System Architecture & Component Selection",
       "Technical Hardware Design Document",
@@ -50,7 +42,7 @@ const sections: Section[] = [
   {
     id: "simulations",
     title: "Simulations",
-    image: simulationsImg,
+    icon: Activity,
     bullets: [
       "Stack-up Engineering",
       "Signal Integrity Analysis",
@@ -60,7 +52,7 @@ const sections: Section[] = [
   {
     id: "fpga",
     title: "FPGA Design",
-    image: fpgaImg,
+    icon: Zap,
     bullets: [
       "Microarchitecture Development",
       "FPGA RTL Design",
@@ -70,7 +62,7 @@ const sections: Section[] = [
   {
     id: "embedded",
     title: "Embedded Software",
-    image: embeddedImg,
+    icon: Code2,
     bullets: [
       "Firmware and BSP Development",
       "Application and UI Software Development",
@@ -81,7 +73,7 @@ const sections: Section[] = [
   {
     id: "mechanical",
     title: "Mechanical & Thermal Capability",
-    image: mechanicalImg,
+    icon: Wrench,
     bullets: [
       "Industrial Design",
       "Structural Analysis",
@@ -93,7 +85,7 @@ const sections: Section[] = [
   {
     id: "validation",
     title: "Product Bring up & Validation",
-    image: validationImg,
+    icon: ShieldCheck,
     bullets: [
       "Hardware Functional Bring up",
       "Electrical DVT (EDVT)",
@@ -105,7 +97,7 @@ const sections: Section[] = [
   {
     id: "production",
     title: "Production Build",
-    image: productionImg,
+    icon: Factory,
     bullets: [
       "NPI/Prototype Build",
       "Production Ramp up",
@@ -151,13 +143,9 @@ function ContentPanel({ section }: { section: Section }) {
               Explore our core competencies in {section.title.toLowerCase()} and discover how our integrated lifecycle approach ensures high-quality engineering deliverables.
             </p>
           </div>
-          {section.image && (
-            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0 flex items-center justify-center">
-              <img 
-                src={section.image} 
-                alt={section.title} 
-                className="w-full h-auto object-contain aspect-square max-h-[180px] transition-transform duration-700 group-hover:scale-105" 
-              />
+          {section.icon && (
+            <div className="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 relative group mx-auto lg:mx-0 flex items-center justify-center rounded-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent border border-primary/25 shadow-inner p-5 transition-all duration-500 hover:scale-105 hover:border-primary/40">
+              <section.icon className="w-12 h-12 sm:w-14 sm:h-14 text-primary drop-shadow-[0_0_12px_rgba(var(--primary),0.5)] transition-transform duration-500 group-hover:scale-110" strokeWidth={1.75} />
             </div>
           )}
         </div>
@@ -220,7 +208,7 @@ const SystemsSolutions = () => {
 
       <main>
         {/* ── Hero ────────────────────────────────────────────────────── */}
-        <section ref={heroRef} className="relative pt-32 pb-16 md:pb-24 overflow-hidden">
+        <section ref={heroRef} className="relative pt-32 pb-12 md:pb-16 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/8 via-background to-background" />
           <div
             className="absolute inset-0 opacity-[0.04]"
@@ -263,26 +251,37 @@ const SystemsSolutions = () => {
 
         {/* ── Product Development Overview ─────────────────────────────── */}
         <section className="container mx-auto px-4 pt-10 md:pt-12 pb-12">
-           <div className="max-w-5xl mx-auto text-center">
-              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4 uppercase tracking-wider">
-                Our Approach
-              </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                 Product Development
-              </h2>
-              <div className="p-8 md:p-12 rounded-3xl bg-card border border-border/50 shadow-sm">
-                <p className="text-2xl md:text-3xl font-bold text-foreground mb-6 leading-tight">
-                   SenaniTech, in conjunction with its clients, covers the entire product development lifecycle.
-                </p>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-                   Senanitech combines state-of-the-art technology with engineering expertise, structured processes, and deep domain experience to deliver innovative products. Our technical insight comes from years of market and customer understanding. Our integrated approach keeps critical disciplines in full communication, minimizing cost and valuable time while moving through the product lifecycle.
-                </p>
+           <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-8">
+                <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4 uppercase tracking-wider">
+                  Our Approach
+                </span>
+                <h2 className="text-3xl md:text-4xl font-display font-bold">
+                   Product Development
+                </h2>
+              </div>
+              <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <div className="text-left">
+                  <p className="text-2xl md:text-3xl font-bold text-foreground mb-6 leading-tight">
+                     SenaniTech, in conjunction with its clients, covers the entire product development lifecycle.
+                  </p>
+                  <p className="text-base text-muted-foreground leading-relaxed">
+                     Senanitech combines state-of-the-art technology with engineering expertise, structured processes, and deep domain experience to deliver innovative products. Our technical insight comes from years of market and customer understanding. Our integrated approach keeps critical disciplines in full communication, minimizing cost and valuable time while moving through the product lifecycle.
+                  </p>
+                </div>
+                <div className="flex items-center justify-center">
+                  <img 
+                    src={productImg} 
+                    alt="Product Development" 
+                    className="max-h-[300px] w-auto object-contain rounded-2xl shadow-md"
+                  />
+                </div>
               </div>
            </div>
         </section>
 
         {/* ── Two-column layout ────────────────────────────────────────── */}
-        <section className="container mx-auto px-4 pt-4 md:pt-8 pb-28">
+        <section className="container mx-auto px-4 pt-4 md:pt-8 pb-16 md:pb-20">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
 
             {/* ── SIDEBAR ── */}
@@ -340,12 +339,6 @@ const SystemsSolutions = () => {
             {/* Desktop: sticky vertical sidebar */}
             <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-32 self-start">
               <div className="rounded-3xl border border-border/50 bg-card/80 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-                <div className="px-6 py-5 border-b border-border/40 bg-gradient-to-r from-muted/50 to-transparent">
-                  <p className="text-sm font-bold text-foreground tracking-wide flex items-center gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),1)]" />
-                    Development Stages
-                  </p>
-                </div>
                 <nav className="p-3 space-y-1.5">
                   {navItems.map((item) => {
                     const isActive = activeId === item.id;
@@ -402,7 +395,7 @@ const SystemsSolutions = () => {
         </section>
 
         {/* ── Global CTA ────────────────────────────────────────── */}
-        <section className="container mx-auto px-4 pb-24">
+        <section className="container mx-auto px-4 pb-12 md:pb-16">
           <div className="max-w-5xl mx-auto rounded-3xl bg-primary/5 border border-primary/20 p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 sm:gap-10 shadow-sm relative overflow-hidden">
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />

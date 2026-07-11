@@ -72,7 +72,7 @@ export function StatsSection() {
   const isInView = useInView(containerRef, { once: true, margin: "0px" });
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative py-12 md:py-16 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-secondary/30" />
       <div className="absolute inset-0 circuit-pattern opacity-10" />

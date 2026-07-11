@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
@@ -11,17 +11,22 @@ import {
   Zap,
   ArrowRight,
   Building,
-  Globe,
-  ChevronLeft,
-  ChevronRight
+  Globe
 } from "lucide-react";
 
-import boschLogo from "@/assets/trusted-by/bosch.webp";
-import bynetLogo from "@/assets/trusted-by/bynet.png";
-import globalchipLogo from "@/assets/trusted-by/globalchipindustrial.png";
-import healthcubeLogo from "@/assets/trusted-by/healthcube.png";
-import neurostellerLogo from "@/assets/trusted-by/neurosteller.png";
-import techventuresLogo from "@/assets/trusted-by/techventures.png";
+import boschLogo from "@/assets/trusted-by/bosch.jpeg"
+import bynetLogo from "@/assets/trusted-by/bynet.jpeg"
+import curneuLogo from "@/assets/trusted-by/curneu.jpeg"
+import doverLogo from "@/assets/trusted-by/dover.png"
+import extrawareLogo from "@/assets/trusted-by/extrawave.jpeg"
+import healthcubeLogo from "@/assets/trusted-by/healthcube.png"
+import hticLogo from "@/assets/trusted-by/htic.jpeg"
+import kirloskarLogo from "@/assets/trusted-by/kirloskar.png"
+import metLogo from "@/assets/trusted-by/met.jpeg"
+import neurostellarLogo from "@/assets/trusted-by/neurostellar.jpeg"
+import setsLogo from "@/assets/trusted-by/sets.jpeg"
+import sonaincubationsLogo from "@/assets/trusted-by/sonincubations.jpeg"
+import voltechLogo from "@/assets/trusted-by/voltech.png"
 
 const values = [
   {
@@ -48,80 +53,19 @@ const values = [
 
 const clientLogos = [
   { name: "Bosch", logo: boschLogo },
-  { name: "Neurostellar", logo: neurostellerLogo },
   { name: "BYNET", logo: bynetLogo },
-  { name: "HealthCube", logo: healthcubeLogo },
-  { name: "TechVentures", logo: techventuresLogo },
-  { name: "GlobalChip", logo: globalchipLogo },
+  { name: "Curneu", logo: curneuLogo },
+  { name: "Dover", logo: doverLogo },
+  { name: "Extraware", logo: extrawareLogo },
+  { name: "Healthcube", logo: healthcubeLogo },
+  { name: "HTIC", logo: hticLogo },
+  { name: "Kirloskar", logo: kirloskarLogo },
+  { name: "MET", logo: metLogo },
+  { name: "Neurostellar", logo: neurostellarLogo },
+  { name: "SETS", logo: setsLogo },
+  { name: "Sona-Incubations", logo: sonaincubationsLogo },
+  { name: "Voltech", logo: voltechLogo }
 ];
-
-const ClientCarousel = () => {
-  const [startIndex, setStartIndex] = useState(0);
-
-  const nextSlide = () => {
-    setStartIndex((prev) => (prev + 1) % clientLogos.length);
-  };
-
-  const prevSlide = () => {
-    setStartIndex((prev) => (prev - 1 + clientLogos.length) % clientLogos.length);
-  };
-
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 3500);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <div className="p-6 md:p-8 rounded-2xl card relative overflow-hidden group">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="font-display font-semibold text-foreground m-0">Trusted by Industry Leaders</h3>
-        <div className="flex gap-2">
-          <button 
-            onClick={prevSlide}
-            className="w-9 h-9 rounded-xl border border-border bg-card hover:bg-primary/10 text-muted-foreground hover:text-primary flex items-center justify-center transition-all shadow-sm"
-            aria-label="Previous client"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button 
-            onClick={nextSlide}
-            className="w-9 h-9 rounded-xl border border-border bg-card hover:bg-primary/10 text-muted-foreground hover:text-primary flex items-center justify-center transition-all shadow-sm"
-            aria-label="Next client"
-          >
-            <ChevronRight size={18} />
-          </button>
-        </div>
-      </div>
-
-      <div className="relative w-full overflow-hidden py-2">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center w-full">
-          {[0, 1, 2].map((offset) => {
-            const index = (startIndex + offset) % clientLogos.length;
-            const client = clientLogos[index];
-            const visibilityClass = offset === 2 ? "hidden md:flex" : "flex";
-
-            return (
-              <motion.div
-                key={`${client.name}-${offset}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className={`${visibilityClass} items-center justify-center p-4 h-20 bg-muted/40 backdrop-blur-sm rounded-2xl border border-border/40 shadow-inner hover:bg-card hover:shadow-md hover:border-primary/20 transition-all duration-300`}
-              >
-                <img 
-                  src={client.logo} 
-                  alt={client.name} 
-                  className="max-h-full max-w-full object-contain filter grayscale dark:invert-0 opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                />
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const About = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -199,37 +143,81 @@ const About = () => {
         </section>
 
         {/* Stats */}
-        <section className="py-24">
+        <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
               <div>
                 <h2 className="text-3xl font-display font-bold mb-6">
                   <span className="gradient-text-bright">10+</span> Industry Experts
                 </h2>
-                <p className="text-muted-foreground mb-6">
+                <p className="text-muted-foreground mb-6 text-base md:text-lg leading-relaxed">
                   Our team brings together decades of experience from leading semiconductor
                   and electronics companies worldwide. We combine deep technical expertise
                   with a customer-first approach.
                 </p>
-                <div className="flex items-center gap-6">
+                <div className="flex flex-wrap items-center gap-6">
                   <div className="flex items-center gap-2">
                     <Building size={20} className="text-highlight" />
-                    <span className="text-sm text-muted-foreground">R&D in Coimbatore</span>
+                    <span className="text-sm md:text-base text-muted-foreground font-medium">R&D in Salem</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Globe size={20} className="text-highlight" />
-                    <span className="text-sm text-muted-foreground">Manufacturing in Chennai</span>
+                    <span className="text-sm md:text-base text-muted-foreground font-medium">Manufacturing in Chennai</span>
                   </div>
                 </div>
               </div>
+
+              {/* Right column highlights */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { title: "Decades of R&D", desc: "Leading-edge hardware & systems design" },
+                  { title: "Quality Testing", desc: "Advanced ATE & validation processes" },
+                  { title: "Rapid Prototyping", desc: "Quick-turn PCB manufacturing" },
+                  { title: "Global Standards", desc: "Industry-compliant engineering" },
+                ].map((item, idx) => (
+                  <div key={idx} className="p-5 rounded-2xl card border border-border/40 hover:-translate-y-0.5 transition-transform">
+                    <h4 className="font-display font-bold text-foreground text-base mb-1.5">{item.title}</h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-border/30 pt-12 mt-12 w-full overflow-hidden relative">
+              {/* Fade edges */}
+              <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+              <p className="text-xs font-semibold tracking-wider text-muted-foreground/80 uppercase mb-8 text-center">
+                Trusted by Industry Leaders
+              </p>
               
-              <ClientCarousel />
+              <div className="w-full overflow-hidden">
+                <motion.div
+                  animate={{ x: ["0%", "-50%"] }}
+                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                  className="flex gap-16 items-center w-max"
+                >
+                  {[...clientLogos, ...clientLogos].map((client, index) => (
+                    <div 
+                      key={`${client.name}-${index}`} 
+                      className="h-20 w-44 flex items-center justify-center flex-shrink-0"
+                    >
+                      <img 
+                        src={client.logo} 
+                        alt={client.name} 
+                        className="max-h-full max-w-full object-contain opacity-75 hover:opacity-100 transition-all duration-300 hover:scale-105"
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="py-20 bg-secondary/20">
+        <section className="py-10 md:py-14 bg-secondary/20">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold mb-4">
               Join our growing list of partners

@@ -4,20 +4,15 @@ import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Cpu, ShieldCheck, Microscope, LayoutTemplate, PackageOpen } from "lucide-react";
+import { ArrowRight, Check, Cpu, ShieldCheck, Microscope, LayoutTemplate, PackageOpen, Boxes, PackagePlus, Truck, FileText } from "lucide-react";
 
-import ateImg from "@/assets/semiconductor_services/ate_services.png";
-import finalBoardImg from "@/assets/semiconductor_services/final_board.png";
-import probeCardsImg from "@/assets/semiconductor_services/probe_cards.png";
-import reliabilityImg from "@/assets/semiconductor_services/reliability_&_burn-in.png";
-import icCharImg from "@/assets/semiconductor_services/ic_characterization.png";
-import referenceImg from "@/assets/semiconductor_services/reference_design.png";
-import turnkeyImg from "@/assets/semiconductor_services/turnkey_build.png";
-import pcbImg from "@/assets/semiconductor_services/pcb.png";
-import inventoryImg from "@/assets/semiconductor_services/inventory.png";
-import kittingImg from "@/assets/semiconductor_services/kitting.png";
-import shipmentImg from "@/assets/semiconductor_services/shipment.png";
-import kitDocImg from "@/assets/semiconductor_services/kit_documentation.png";
+import ateImg from "@/assets/semiconductor_services/semiconductor_services_ate_services.png";
+import finalBoardImg from "@/assets/semiconductor_services/semiconductor_services_final_board.png";
+import probeCardsImg from "@/assets/semiconductor_services/semiconductor_services_probe_cards.png";
+import reliabilityImg from "@/assets/semiconductor_services/semiconductor_services_reliability_&_burn-in.png";
+import icCharImg from "@/assets/semiconductor_services/semiconductor_services_ic_characterization.png";
+import referenceImg from "@/assets/semiconductor_services/semiconductor_services_reference_design.png";
+import turnkeyImg from "@/assets/semiconductor_services/semiconductor_services_turnkey_build.png";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -34,6 +29,7 @@ interface AccordionItem {
   intro: string;
   points: string[];
   image?: string;
+  icon?: React.ElementType;
 }
 
 interface Section {
@@ -146,31 +142,31 @@ const sections: Section[] = [
         title: "PCB Assembly",
         intro: "Precise fabrication and assembly of printed circuit boards according to specified requirements.",
         points: [],
-        image: pcbImg,
+        icon: Cpu,
       },
       {
         title: "Inventory Management",
         intro: "Efficient tracking and management of electronic components, guaranteeing their availability throughout production.",
         points: [],
-        image: inventoryImg,
+        icon: Boxes,
       },
       {
         title: "Kitting",
         intro: "Methodical compilation of all essential components into organized kits, enhancing the efficiency of the assembly process.",
         points: [],
-        image: kittingImg,
+        icon: PackagePlus,
       },
       {
         title: "Shipment",
         intro: "Coordination of logistics to ensure timely delivery of kits to end-users or production facilities, optimizing project timelines.",
         points: [],
-        image: shipmentImg,
+        icon: Truck,
       },
       {
         title: "Kit Documentation",
         intro: "Thorough documentation accompanying each kit, providing comprehensive guidance and reference for assembly and usage.",
         points: [],
-        image: kitDocImg,
+        icon: FileText,
       },
     ],
   },
@@ -179,6 +175,8 @@ const sections: Section[] = [
 // ─── Sub-Service Card ─────────────────────────────────────────────────────────
 
 function SubServiceCard({ item, index }: { item: AccordionItem; index: number }) {
+  const hasPoints = item.points && item.points.length > 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -187,40 +185,50 @@ function SubServiceCard({ item, index }: { item: AccordionItem; index: number })
       transition={{ duration: 0.4, delay: index * 0.1 }}
       className="group bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col p-6 md:p-8 lg:p-10"
     >
-      <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-        {item.title}
-      </h4>
-      <p className={`text-muted-foreground leading-relaxed text-sm md:text-base ${item.points && item.points.length > 0 || item.image ? 'mb-6' : 'mb-0'}`}>
-        {item.intro}
-      </p>
-
-      <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mt-auto">
-        {item.image && (
-          <div className="w-48 h-48 mx-auto md:mx-0 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative">
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
-            />
+      {!hasPoints ? (
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center justify-between w-full mt-auto mb-auto">
+          <div className="flex-1 text-left">
+            <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+              {item.title}
+            </h4>
+            <p className="text-muted-foreground leading-relaxed text-sm md:text-base mb-0">
+              {item.intro}
+            </p>
           </div>
-        )}
-        
-        {item.points && item.points.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 flex-1 w-full">
-            <ul className="space-y-4">
-              {item.points.slice(0, 4).map((p, i) => (
-                <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
-                  <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">
-                    <Check size={14} strokeWidth={2.5} />
-                  </span>
-                  <span className="leading-relaxed pt-0.5">{p}</span>
-                </li>
-              ))}
-            </ul>
-            {item.points.length > 4 && (
+          {item.image && (
+            <div className="w-32 h-32 flex items-center justify-center flex-shrink-0 relative mx-auto md:mx-0">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
+              />
+            </div>
+          )}
+        </div>
+      ) : (
+        <>
+          <h4 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+            {item.title}
+          </h4>
+          <p className={`text-muted-foreground leading-relaxed text-sm md:text-base ${item.image || hasPoints ? 'mb-6' : 'mb-0'}`}>
+            {item.intro}
+          </p>
+
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mt-auto">
+            {item.image && (
+              <div className="w-48 h-48 mx-auto md:mx-0 md:w-32 md:h-32 lg:w-36 lg:h-36 flex items-center justify-center flex-shrink-0 relative">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
+                />
+              </div>
+            )}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 flex-1 w-full">
               <ul className="space-y-4">
-                {item.points.slice(4).map((p, i) => (
-                  <li key={i + 4} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
+                {item.points.slice(0, 3).map((p, i) => (
+                  <li key={i} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
                     <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">
                       <Check size={14} strokeWidth={2.5} />
                     </span>
@@ -228,10 +236,55 @@ function SubServiceCard({ item, index }: { item: AccordionItem; index: number })
                   </li>
                 ))}
               </ul>
-            )}
+              {item.points.length > 3 && (
+                <ul className="space-y-4">
+                  {item.points.slice(3).map((p, i) => (
+                    <li key={i + 3} className="flex items-start gap-3.5 text-sm text-muted-foreground group/item hover:text-foreground transition-colors duration-200">
+                      <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-colors duration-300 shadow-sm">
+                        <Check size={14} strokeWidth={2.5} />
+                      </span>
+                      <span className="leading-relaxed pt-0.5">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-        )}
+        </>
+      )}
+    </motion.div>
+  );
+}
+
+function KeyElementCard({ item, index }: { item: AccordionItem; index: number }) {
+  const IconComponent = item.icon;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="group bg-card/90 backdrop-blur-sm border border-border/70 hover:border-primary/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 flex flex-col p-6 sm:p-7 text-center items-center h-full"
+    >
+      {/* Icon SVG Container */}
+      <div className="w-16 h-16 sm:w-20 sm:h-20 mb-5 rounded-2xl bg-gradient-to-br from-primary/15 via-primary/5 to-transparent border border-primary/20 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
+        {IconComponent ? (
+          <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-primary group-hover:text-primary-foreground transition-colors duration-500" strokeWidth={2} />
+        ) : item.image ? (
+          <img src={item.image} alt={item.title} className="w-full h-full object-contain" />
+        ) : null}
       </div>
+
+      {/* Title */}
+      <h4 className="text-lg sm:text-xl font-display font-bold text-foreground mb-2.5 group-hover:text-primary transition-colors duration-300">
+        {item.title}
+      </h4>
+
+      {/* Intro Description */}
+      <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm opacity-90">
+        {item.intro}
+      </p>
     </motion.div>
   );
 }
@@ -258,18 +311,20 @@ function ContentPanel({ section }: { section: Section }) {
         transition={{ duration: 0.45 }}
         className="mb-8"
       >
-        <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-3">
-          Semiconductor Services
-        </span>
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4 leading-tight">
-          {section.title}
-        </h2>
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-6 items-start">
-          <p className="flex-1 text-muted-foreground leading-relaxed text-base md:text-lg">
-            {section.intro}
-          </p>
+          <div className="flex-1">
+            <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-3">
+              Semiconductor Services
+            </span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4 leading-tight">
+              {section.title}
+            </h2>
+            <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
+              {section.intro}
+            </p>
+          </div>
           {section.image && (
-            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0 flex items-center justify-center">
+            <div className="w-full max-w-[220px] flex-shrink-0 relative group mx-auto lg:mx-0 flex items-center justify-center lg:mt-8">
               <img 
                 src={section.image} 
                 alt={section.title} 
@@ -324,11 +379,36 @@ function ContentPanel({ section }: { section: Section }) {
           <h3 className="font-display font-semibold text-foreground text-xl md:text-2xl mb-4">
             {section.id === "turnkey" ? "Key Elements" : "Sub-Services"}
           </h3>
-          <div className="grid grid-cols-1 gap-6">
-            {section.accordions.map((acc, i) => (
-              <SubServiceCard key={acc.title} item={acc} index={i} />
-            ))}
-          </div>
+          {section.id === "turnkey" ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+              {section.accordions.map((acc, i) => (
+                <div key={acc.title} className="h-full">
+                  <KeyElementCard item={acc} index={i} />
+                </div>
+              ))}
+            </div>
+          ) : section.accordions.length === 5 ? (
+            <div className="space-y-6">
+              {/* First 3 in a row */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {section.accordions.slice(0, 3).map((acc, i) => (
+                  <SubServiceCard key={acc.title} item={acc} index={i} />
+                ))}
+              </div>
+              {/* Next 2 in a row */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {section.accordions.slice(3, 5).map((acc, i) => (
+                  <SubServiceCard key={acc.title} item={acc} index={i + 3} />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6">
+              {section.accordions.map((acc, i) => (
+                <SubServiceCard key={acc.title} item={acc} index={i} />
+              ))}
+            </div>
+          )}
         </motion.div>
       )}
 
@@ -351,7 +431,7 @@ const SemiconductorServices = () => {
 
       <main>
         {/* ── Hero ────────────────────────────────────────────────────── */}
-        <section ref={heroRef} className="relative pt-32 pb-20 overflow-hidden">
+        <section ref={heroRef} className="relative pt-32 pb-16 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/8 via-background to-background" />
           <div
             className="absolute inset-0 opacity-[0.04]"
@@ -386,9 +466,11 @@ const SemiconductorServices = () => {
                     Get a Quote <ArrowRight size={17} />
                   </Button>
                 </Link>
-                <Button variant="hero-outline" size="lg">
-                  Download Capabilities
-                </Button>
+                <a href="/SENANITECH_PPT.pptx" download="SenaniTech_Capabilities.pptx">
+                  <Button variant="hero-outline" size="lg">
+                    Download Capabilities
+                  </Button>
+                </a>
               </div>
             </motion.div>
 
@@ -407,10 +489,10 @@ const SemiconductorServices = () => {
               ].map(([val, label]) => (
                 <div
                   key={label}
-                  className="px-5 py-3 rounded-xl card text-center min-w-[110px]"
+                  className="px-8 py-5 sm:px-10 sm:py-6 rounded-2xl card text-center min-w-[160px] sm:min-w-[200px]"
                 >
-                  <div className="text-xl font-display font-bold gradient-text-bright">{val}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
+                  <div className="text-2xl sm:text-3xl font-display font-bold gradient-text-bright">{val}</div>
+                  <div className="text-sm sm:text-base text-muted-foreground mt-1">{label}</div>
                 </div>
               ))}
             </motion.div>
@@ -418,7 +500,7 @@ const SemiconductorServices = () => {
         </section>
 
         {/* ── Two-column layout ────────────────────────────────────────── */}
-        <section className="container mx-auto px-4 pt-16 md:pt-24 pb-28">
+        <section className="container mx-auto px-4 pt-10 md:pt-12 pb-16 md:pb-20">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
 
             {/* ── SIDEBAR ── */}
@@ -479,12 +561,6 @@ const SemiconductorServices = () => {
             {/* Desktop: sticky vertical sidebar */}
             <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-32 self-start">
               <div className="rounded-3xl border border-border/50 bg-card/80 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-                <div className="px-6 py-5 border-b border-border/40 bg-gradient-to-r from-muted/50 to-transparent">
-                  <p className="text-sm font-bold text-foreground tracking-wide flex items-center gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),1)]" />
-                    Services Directory
-                  </p>
-                </div>
                 <nav className="p-3 space-y-1.5">
                   {navItems.map((item) => {
                     const isActive = activeId === item.id;
@@ -541,7 +617,7 @@ const SemiconductorServices = () => {
         </section>
 
         {/* ── Global CTA ────────────────────────────────────────── */}
-        <section className="container mx-auto px-4 pb-24">
+        <section className="container mx-auto px-4 pb-12 md:pb-16">
           <div className="max-w-5xl mx-auto rounded-3xl bg-primary/5 border border-primary/20 p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 sm:gap-10 shadow-sm relative overflow-hidden">
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />

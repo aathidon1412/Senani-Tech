@@ -26,7 +26,7 @@ export function IndustriesSection() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-24 overflow-hidden bg-secondary/20">
+    <section className="relative py-12 md:py-16 overflow-hidden bg-secondary/20">
       {/* Background Pattern */}
       <div className="absolute inset-0 circuit-pattern opacity-10" />
 

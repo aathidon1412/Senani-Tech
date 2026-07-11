@@ -9,7 +9,7 @@ export function CTASection() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-32 overflow-hidden" ref={containerRef}>
+    <section className="relative py-16 md:py-20 overflow-hidden" ref={containerRef}>
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/10 to-background" />
       <div

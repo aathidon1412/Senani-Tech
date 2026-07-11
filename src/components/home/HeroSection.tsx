@@ -1,10 +1,25 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ParticleField } from "@/components/effects/ParticleField";
 
 export function HeroSection() {
+  const [showIndicator, setShowIndicator] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setShowIndicator(false);
+      } else {
+        setShowIndicator(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToServices = () => {
     const element = document.getElementById("services");
     element?.scrollIntoView({ behavior: "smooth" });
@@ -118,21 +133,26 @@ export function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.button
-        onClick={scrollToServices}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-      >
-        <span className="text-sm">Scroll to explore</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown size={24} />
-        </motion.div>
-      </motion.button>
+      <AnimatePresence>
+        {showIndicator && (
+          <motion.button
+            onClick={scrollToServices}
+            initial={{ opacity: 0, x: "-50%" }}
+            animate={{ opacity: 1, x: "-50%" }}
+            exit={{ opacity: 0, x: "-50%" }}
+            transition={{ duration: 0.3 }}
+            className="absolute bottom-8 left-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer z-20"
+          >
+            <span className="text-sm">Scroll to explore</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ChevronDown size={24} />
+            </motion.div>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

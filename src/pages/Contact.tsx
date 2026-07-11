@@ -5,14 +5,14 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
+import {
+  Mail,
+  Phone,
+  MapPin,
   Send,
   CheckCircle,
   Building,
-  Factory
+  Factory,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -26,10 +26,10 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
     setIsSubmitting(false);
     setIsSubmitted(true);
     toast({
@@ -41,13 +41,13 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       <main>
         {/* Hero Section */}
         <section ref={heroRef} className="relative pt-32 pb-12 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
           <div className="absolute inset-0 circuit-pattern opacity-20" />
-          
+
           <div className="container mx-auto px-4 relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -59,7 +59,8 @@ const Contact = () => {
                 Contact Us
               </span>
               <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
-                Connect with <span className="gradient-text-bright">SenaniTech</span>
+                Connect with{" "}
+                <span className="gradient-text-bright">SenaniTech</span>
               </h1>
               <p className="text-lg text-muted-foreground">
                 Your worldwide partner in quality and innovation
@@ -69,7 +70,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Section */}
-        <section className="py-16">
+        <section className="py-10 md:py-12">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
               {/* Contact Form */}
@@ -79,11 +80,16 @@ const Contact = () => {
                 viewport={{ once: true }}
                 className="p-8 rounded-2xl card"
               >
-                <h2 className="text-2xl font-display font-bold mb-6">Send us a message</h2>
-                
+                <h2 className="text-2xl font-display font-bold mb-6">
+                  Send us a message
+                </h2>
+
                 {isSubmitted ? (
                   <div className="text-center py-12">
-                    <CheckCircle size={64} className="text-highlight mx-auto mb-4" />
+                    <CheckCircle
+                      size={64}
+                      className="text-highlight mx-auto mb-4"
+                    />
                     <h3 className="text-xl font-semibold mb-2">Thank you!</h3>
                     <p className="text-muted-foreground">
                       We've received your message and will respond shortly.
@@ -93,36 +99,44 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium mb-2">Name</label>
-                        <Input 
-                          placeholder="Your name" 
-                          required 
+                        <label className="block text-sm font-medium mb-2">
+                          Name
+                        </label>
+                        <Input
+                          placeholder="Your name"
+                          required
                           className="bg-muted/50 border-border focus:border-highlight"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Email</label>
-                        <Input 
-                          type="email" 
-                          placeholder="your@email.com" 
+                        <label className="block text-sm font-medium mb-2">
+                          Email
+                        </label>
+                        <Input
+                          type="email"
+                          placeholder="your@email.com"
                           required
                           className="bg-muted/50 border-border focus:border-highlight"
                         />
                       </div>
                     </div>
-                    
+
                     <div>
-                      <label className="block text-sm font-medium mb-2">Phone (Optional)</label>
-                      <Input 
-                        type="tel" 
-                        placeholder="+91 9486470817"
+                      <label className="block text-sm font-medium mb-2">
+                        Phone (Optional)
+                      </label>
+                      <Input
+                        type="tel"
+                        placeholder="+91 9876543210"
                         className="bg-muted/50 border-border focus:border-highlight"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Message</label>
-                      <Textarea 
+                      <label className="block text-sm font-medium mb-2">
+                        Message
+                      </label>
+                      <Textarea
                         placeholder="Tell us about your project..."
                         rows={5}
                         required
@@ -130,10 +144,10 @@ const Contact = () => {
                       />
                     </div>
 
-                    <Button 
-                      type="submit" 
-                      variant="hero" 
-                      size="lg" 
+                    <Button
+                      type="submit"
+                      variant="hero"
+                      size="lg"
                       className="w-full"
                       disabled={isSubmitting}
                     >
@@ -141,7 +155,11 @@ const Contact = () => {
                         <span className="flex items-center gap-2">
                           <motion.span
                             animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            transition={{
+                              duration: 1,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
                           >
                             ⏳
                           </motion.span>
@@ -167,22 +185,28 @@ const Contact = () => {
               >
                 {/* Quick Contact */}
                 <div className="p-6 rounded-2xl card">
-                  <h3 className="font-display font-semibold mb-4">Quick Contact</h3>
+                  <h3 className="font-display font-semibold mb-4">
+                    Quick Contact
+                  </h3>
                   <div className="space-y-4">
-                    <a 
-                      href="mailto:praveen@senanitech.com"
+                    <a
+                      href="mailto:info@senanitech.com"
                       className="flex items-center gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
                     >
                       <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center">
                         <Mail size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">Email</div>
-                        <div className="font-medium text-black">praveen@senanitech.com</div>
+                        <div className="text-sm text-muted-foreground">
+                          Email
+                        </div>
+                        <div className="font-medium text-black">
+                          info@senanitech.com
+                        </div>
                       </div>
                     </a>
-                    
-                    <a 
+
+                    <a
                       href="tel:+919486470817"
                       className="flex items-center gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
                     >
@@ -190,8 +214,12 @@ const Contact = () => {
                         <Phone size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">Phone</div>
-                        <div className="font-medium text-black">+91 9486470817</div>
+                        <div className="text-sm text-muted-foreground">
+                          Phone
+                        </div>
+                        <div className="font-medium text-black">
+                          +91 9486470817
+                        </div>
                       </div>
                     </a>
                   </div>
@@ -199,34 +227,45 @@ const Contact = () => {
 
                 {/* Locations */}
                 <div className="p-6 rounded-2xl card">
-                  <h3 className="font-display font-semibold mb-4">Our Locations</h3>
+                  <h3 className="font-display font-semibold mb-4">
+                    Our Locations
+                  </h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-4 p-4 rounded-xl bg-muted/50">
                       <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center flex-shrink-0">
                         <Building size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="font-medium">Engineering Delivery Center</div>
+                        <div className="font-medium">
+                          Engineering Delivery Center
+                        </div>
                         <div className="text-sm text-muted-foreground mt-1">
                           SENANITECH
                         </div>
                         <div className="text-xs text-muted-foreground mt-2">
-                          2nd floor, Sona Valliappa Block,<br />
-                          Junction Main Rd, Salem,<br />
-                          Tamil Nadu 636005.
+                          2nd floor, Sona Valliappa Block,
+                          <br />
+                          Junction Main Rd, Salem,
+                          <br />
+                          Tamil Nadu - 636005.
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-start gap-4 p-4 rounded-xl bg-muted/50">
                       <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center flex-shrink-0">
                         <Building size={20} className="text-white" />
                       </div>
                       <div>
                         <div className="font-medium">Registered Address</div>
+                        <div className="text-sm text-muted-foreground mt-1">
+                          SENANITECH
+                        </div>
                         <div className="text-xs text-muted-foreground mt-2">
-                          212-6(3), Thirumalai Nagar, Narasothipatty,<br />
-                          Alagapuram, Salem,<br />
+                          212-6(3), Thirumalai Nagar, Narasothipatty,
+                          <br />
+                          Alagapuram, Salem,
+                          <br />
                           Tamil Nadu - 636004
                         </div>
                       </div>

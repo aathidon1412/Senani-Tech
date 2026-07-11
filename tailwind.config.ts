@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Lato', 'sans-serif'],
+        display: ['Lato', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
