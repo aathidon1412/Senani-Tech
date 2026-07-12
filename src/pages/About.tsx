@@ -14,18 +14,18 @@ import {
   Globe
 } from "lucide-react";
 
-import boschLogo from "@/assets/trusted-by/bosch.jpeg"
-import bynetLogo from "@/assets/trusted-by/bynet.jpeg"
-import curneuLogo from "@/assets/trusted-by/curneu.jpeg"
+import boschLogo from "@/assets/trusted-by/bosch.png"
+import bynetLogo from "@/assets/trusted-by/bynet.png"
+import curneuLogo from "@/assets/trusted-by/curneu.png"
 import doverLogo from "@/assets/trusted-by/dover.png"
-import extrawareLogo from "@/assets/trusted-by/extrawave.jpeg"
+import extrawareLogo from "@/assets/trusted-by/extraware.png"
 import healthcubeLogo from "@/assets/trusted-by/healthcube.png"
-import hticLogo from "@/assets/trusted-by/htic.jpeg"
+import hticLogo from "@/assets/trusted-by/htic.png"
 import kirloskarLogo from "@/assets/trusted-by/kirloskar.png"
-import metLogo from "@/assets/trusted-by/met.jpeg"
-import neurostellarLogo from "@/assets/trusted-by/neurostellar.jpeg"
-import setsLogo from "@/assets/trusted-by/sets.jpeg"
-import sonaincubationsLogo from "@/assets/trusted-by/sonincubations.jpeg"
+import metLogo from "@/assets/trusted-by/c-met.png"
+import neurostellarLogo from "@/assets/trusted-by/neurostellar.png"
+import setsLogo from "@/assets/trusted-by/sets.png"
+import sonaincubationsLogo from "@/assets/trusted-by/sonaincubations.png"
 import voltechLogo from "@/assets/trusted-by/voltech.png"
 
 const values = [

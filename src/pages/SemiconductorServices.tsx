@@ -466,7 +466,7 @@ const SemiconductorServices = () => {
                     Get a Quote <ArrowRight size={17} />
                   </Button>
                 </Link>
-                <a href="/SENANITECH_PPT.pptx" download="SenaniTech_Capabilities.pptx">
+                <a href="/SENANITECH_CAPABLITIES.pdf" download="SenaniTech_Capabilities.pdf">
                   <Button variant="hero-outline" size="lg">
                     Download Capabilities
                   </Button>

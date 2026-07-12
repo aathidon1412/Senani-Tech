@@ -201,21 +201,40 @@ const Contact = () => {
                       exit={{ opacity: 0 }}
                       className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center z-30"
                     >
-                      <div className="relative w-28 h-28 flex items-center justify-center mb-6">
-                        <div className="absolute inset-0 rounded-full border-4 border-[#545454]/10" />
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                          className="absolute inset-0 rounded-full border-4 border-t-[#545454] border-r-transparent border-b-transparent border-l-transparent"
-                        />
+                      <div className="relative w-36 h-36 flex items-center justify-center mb-6">
+                        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 144 144">
+                          <rect
+                            x="4"
+                            y="4"
+                            width="136"
+                            height="136"
+                            fill="none"
+                            stroke="#545454"
+                            strokeWidth="4"
+                            className="opacity-10"
+                          />
+                          <motion.rect
+                            x="4"
+                            y="4"
+                            width="136"
+                            height="136"
+                            fill="none"
+                            stroke="#545454"
+                            strokeWidth="4"
+                            strokeLinecap="square"
+                            initial={{ pathLength: 0 }}
+                            animate={{ pathLength: 1 }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                          />
+                        </svg>
                         <img
                           src={loadingLogo}
                           alt="Loading logo"
-                          className="w-16 h-16 object-contain relative z-10"
+                          className="w-24 h-24 object-contain relative z-10"
                         />
                       </div>
                       <h3 className="text-lg font-semibold text-foreground mb-1">
