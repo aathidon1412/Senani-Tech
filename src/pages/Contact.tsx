@@ -201,7 +201,7 @@ const Contact = () => {
                       exit={{ opacity: 0 }}
                       className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center z-30"
                     >
-                      <div className="relative w-36 h-36 flex items-center justify-center mb-6">
+                      <div className="relative w-44 h-44 flex items-center justify-center mb-6">
                         <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 144 144">
                           <rect
                             x="4"
@@ -234,7 +234,7 @@ const Contact = () => {
                         <img
                           src={loadingLogo}
                           alt="Loading logo"
-                          className="w-24 h-24 object-contain relative z-10"
+                          className="w-[90%] h-[90%] object-contain relative z-10"
                         />
                       </div>
                       <h3 className="text-lg font-semibold text-foreground mb-1">
