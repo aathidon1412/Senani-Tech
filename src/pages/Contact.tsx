@@ -20,9 +20,41 @@ import loadingLogo from "@/assets/loading_logo.png";
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [fileData, setFileData] = useState<{ base64: string; name: string } | null>(null);
   const { toast } = useToast();
   const heroRef = useRef<HTMLDivElement>(null);
   const heroInView = useInView(heroRef, { once: true });
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setFileData(null);
+      return;
+    }
+
+    // Vercel serverless has a payload limit of 4.5MB, so limit file to 3.5MB to be safe
+    if (file.size > 3.5 * 1024 * 1024) {
+      toast({
+        variant: "destructive",
+        title: "File too large",
+        description: "Please upload a file smaller than 3.5MB.",
+      });
+      e.target.value = "";
+      setFileData(null);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      const base64Data = base64String.split(",")[1];
+      setFileData({
+        base64: base64Data,
+        name: file.name,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,6 +66,8 @@ const Contact = () => {
       email: formData.get("email"),
       phone: formData.get("phone"),
       message: formData.get("message"),
+      attachment: fileData?.base64 || null,
+      attachmentName: fileData?.name || null,
     };
 
     try {
@@ -162,6 +196,19 @@ const Contact = () => {
                         type="tel"
                         placeholder="+91 9876543210"
                         className="bg-muted/50 border-border focus:border-highlight"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Attachment (Optional, e.g. PDF, Images, Max 3.5MB)
+                      </label>
+                      <Input
+                        name="attachment"
+                        type="file"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                        onChange={handleFileChange}
+                        className="bg-muted/50 border-border focus:border-highlight file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 cursor-pointer"
                       />
                     </div>
 
@@ -303,12 +350,17 @@ const Contact = () => {
                     Our Locations
                   </h3>
                   <div className="space-y-4">
-                    <div className="flex items-start gap-4 p-4 rounded-xl bg-muted/50">
-                      <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center flex-shrink-0">
+                    <a
+                      href="https://maps.app.goo.gl/AEot2vSx5HQqR17B6"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors cursor-pointer group"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         <Building size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="font-medium">
+                        <div className="font-medium text-black transition-colors">
                           Engineering Delivery Center
                         </div>
                         <div className="text-sm text-muted-foreground mt-1">
@@ -322,14 +374,21 @@ const Contact = () => {
                           Tamil Nadu - 636005.
                         </div>
                       </div>
-                    </div>
+                    </a>
 
-                    <div className="flex items-start gap-4 p-4 rounded-xl bg-muted/50">
-                      <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center flex-shrink-0">
+                    <a
+                      href="https://maps.app.goo.gl/CcMGZQbRA8uFzjQP7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors cursor-pointer group"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-green-400 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         <Building size={20} className="text-white" />
                       </div>
                       <div>
-                        <div className="font-medium">Registered Address</div>
+                        <div className="font-medium text-black transition-colors">
+                          Registered Address
+                        </div>
                         <div className="text-sm text-muted-foreground mt-1">
                           SENANITECH
                         </div>
@@ -341,7 +400,7 @@ const Contact = () => {
                           Tamil Nadu - 636004.
                         </div>
                       </div>
-                    </div>
+                    </a>
                   </div>
                 </div>
               </motion.div>

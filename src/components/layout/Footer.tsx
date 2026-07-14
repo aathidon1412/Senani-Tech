@@ -33,11 +33,13 @@ const footerLinks = {
         name: "Engineering Delivery Center",
         address:
           "SENANITECH\n2nd floor, Sona Valliappa Block,\nJunction Main Rd, Salem,\nTamil Nadu - 636005.",
+        mapUrl: "https://maps.app.goo.gl/AEot2vSx5HQqR17B6",
       },
       {
         name: "Registered Address",
         address:
           "SENANITECH\n212-6(3), Thirumalai Nagar,\nNarasothipatty, Alagapuram,\nSalem, Tamil Nadu - 636004.",
+        mapUrl: "https://maps.app.goo.gl/CcMGZQbRA8uFzjQP7",
       },
     ],
   },
@@ -174,20 +176,25 @@ export function Footer() {
               </li>
               {footerLinks.contact.locations.map((location) => (
                 <li key={location.name} className="text-sm">
-                  <div className="flex items-start gap-2">
+                  <a
+                    href={location.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 text-muted-foreground hover:text-highlight transition-colors no-underline group"
+                  >
                     <MapPin
                       size={14}
-                      className="text-primary mt-0.5 shrink-0"
+                      className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform"
                     />
                     <div>
-                      <span className="text-foreground font-medium">
+                      <span className="text-foreground font-medium group-hover:text-highlight transition-colors">
                         {location.name}
                       </span>
-                      <p className="text-muted-foreground whitespace-pre-line">
+                      <p className="text-muted-foreground whitespace-pre-line group-hover:text-muted-foreground">
                         {location.address}
                       </p>
                     </div>
-                  </div>
+                  </a>
                 </li>
               ))}
             </ul>
