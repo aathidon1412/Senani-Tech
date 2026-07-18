@@ -11,7 +11,8 @@ import {
   Zap,
   ArrowRight,
   Building,
-  Globe
+  Globe,
+  MapPin
 } from "lucide-react";
 
 import boschLogo from "@/assets/trusted-by/bosch.png"
@@ -161,8 +162,12 @@ const About = () => {
                     <span className="text-sm md:text-base text-muted-foreground font-medium">R&D in Salem</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Globe size={20} className="text-highlight" />
+                    <MapPin size={20} className="text-highlight" />
                     <span className="text-sm md:text-base text-muted-foreground font-medium">Manufacturing in Chennai</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Globe size={20} className="text-highlight" />
+                    <span className="text-sm md:text-base text-muted-foreground font-medium">Service to Global</span>
                   </div>
                 </div>
               </div>
