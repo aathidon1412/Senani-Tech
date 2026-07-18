@@ -50,7 +50,7 @@ function PageTransitionWrapper({ children }: { children: React.ReactNode }) {
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="fixed inset-0 bg-background z-[9999] flex flex-col items-center justify-center pointer-events-auto"
           >
-            <div className="relative w-44 h-44 flex items-center justify-center mb-6">
+            <div className="relative w-44 h-44 flex items-center justify-center">
               <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 144 144">
                 <rect
                   x="4"
@@ -82,12 +82,9 @@ function PageTransitionWrapper({ children }: { children: React.ReactNode }) {
               <img
                 src={loadingLogo}
                 alt="Loading"
-                className="w-[90%] h-[90%] object-contain relative z-10"
+                className="w-[94.4%] h-[94.4%] object-contain relative z-10"
               />
             </div>
-            <span className="text-lg font-semibold tracking-widest text-muted-foreground/80 animate-pulse uppercase">
-              Loading...
-            </span>
           </motion.div>
         )}
       </AnimatePresence>

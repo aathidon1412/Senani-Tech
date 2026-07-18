@@ -363,7 +363,7 @@ const Contact = () => {
                         <img
                           src={loadingLogo}
                           alt="Loading logo"
-                          className="w-[90%] h-[90%] object-contain relative z-10"
+                          className="w-[94.4%] h-[94.4%] object-contain relative z-10"
                         />
                       </div>
                       <h3 className="text-lg font-semibold text-foreground mb-1">
