@@ -5,8 +5,8 @@ import { Menu, X, ChevronDown, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
-import logoShort from "@/assets/logo_2.png";
-import logoLong from "@/assets/logo_1.png";
+import logoShort from "@/assets/logo_2.webp";
+import logoLong from "@/assets/logo_1.webp";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -117,11 +117,13 @@ export function Navbar() {
                 src={logoShort}
                 alt="SenaniTech"
                 className="w-20 h-20 sm:w-24 sm:h-24 object-contain shrink-0"
+                loading="lazy"
               />
               <img
                 src={logoLong}
                 alt="SenaniTech"
                 className="h-24 md:h-32 w-auto max-w-[400px] object-contain -ml-2 sm:-ml-3 shrink-0"
+                loading="lazy"
               />
             </motion.div>
           </Link>
@@ -280,11 +282,13 @@ export function Navbar() {
                         src={logoShort}
                         alt="SenaniTech"
                         className="w-20 h-20 sm:w-24 sm:h-24 object-contain shrink-0"
+                        loading="lazy"
                       />
                       <img
                         src={logoLong}
                         alt="SenaniTech"
                         className="h-24 md:h-32 w-auto max-w-[400px] object-contain -ml-2 sm:-ml-3 shrink-0"
+                        loading="lazy"
                       />
                     </div>
                   </Link>

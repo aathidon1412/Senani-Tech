@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-import semiconductorImg from "@/assets/IndustrySection/SemiConductors.png";
-import aimlImg from "@/assets/IndustrySection/AIML.png";
-import dataCenterImg from "@/assets/IndustrySection/DataCenter.png";
-import storageImg from "@/assets/IndustrySection/Storage.png";
-import networkingImg from "@/assets/IndustrySection/Networking.png";
-import healthcareImg from "@/assets/IndustrySection/Healthcare.png";
-import automotiveImg from "@/assets/IndustrySection/Automotive.png";
-import consumerImg from "@/assets/IndustrySection/Consumer.png";
+import semiconductorImg from "@/assets/IndustrySection/SemiConductors.webp";
+import aimlImg from "@/assets/IndustrySection/AIML.webp";
+import dataCenterImg from "@/assets/IndustrySection/DataCenter.webp";
+import storageImg from "@/assets/IndustrySection/Storage.webp";
+import networkingImg from "@/assets/IndustrySection/Networking.webp";
+import healthcareImg from "@/assets/IndustrySection/Healthcare.webp";
+import automotiveImg from "@/assets/IndustrySection/Automotive.webp";
+import consumerImg from "@/assets/IndustrySection/Consumer.webp";
 
 const industries = [
   { image: semiconductorImg, name: "Semiconductor", description: "Chip testing & validation" },
@@ -78,6 +78,7 @@ export function IndustriesSection() {
                         src={industry.image}
                         alt={industry.name}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
                       />
                     </div>
 
@@ -113,6 +114,7 @@ export function IndustriesSection() {
                   src={industry.image}
                   alt={industry.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
                 />
               </div>
               {/* Text */}

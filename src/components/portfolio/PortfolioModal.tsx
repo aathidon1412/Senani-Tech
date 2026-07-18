@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, 
@@ -31,6 +31,19 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
   const totalSlides = portfolioSlides.length;
   const currentSlide = portfolioSlides[currentIdx];
 
+  const nextSlide = useCallback(() => {
+    setCurrentIdx((prev) => (prev + 1) % totalSlides);
+  }, [totalSlides]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIdx((prev) => (prev - 1 + totalSlides) % totalSlides);
+  }, [totalSlides]);
+
+  const jumpToSlide = (idx: number) => {
+    setCurrentIdx(idx);
+    setShowOutline(false);
+  };
+
   // Keyboard navigation
   useEffect(() => {
     if (!isOpen) return;
@@ -49,7 +62,7 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, currentIdx]);
+  }, [isOpen, nextSlide, prevSlide, onClose]);
 
   // Slideshow Auto-play
   useEffect(() => {
@@ -67,19 +80,6 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
   }, [isPlaying, totalSlides]);
 
   if (!isOpen) return null;
-
-  const nextSlide = () => {
-    setCurrentIdx((prev) => (prev + 1) % totalSlides);
-  };
-
-  const prevSlide = () => {
-    setCurrentIdx((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
-
-  const jumpToSlide = (idx: number) => {
-    setCurrentIdx(idx);
-    setShowOutline(false);
-  };
 
   return (
     <AnimatePresence>
@@ -254,9 +254,10 @@ function renderSlide(slide: SlideData) {
   return (
     <div className="w-full h-full flex items-center justify-center p-1 md:p-3 relative bg-slate-950">
       <img
-        src={`/slides/Slide${slide.id}.PNG`}
+        src={`/slides/Slide${slide.id}.webp`}
         alt={slide.title}
         className="max-h-full max-w-full object-contain rounded-xl border border-slate-800/80 shadow-2xl"
+        loading="lazy"
       />
     </div>
   );

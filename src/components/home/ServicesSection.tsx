@@ -3,9 +3,9 @@ import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
-import semiconductorImg from "@/assets/ServiceSection/ServiceSection_Semiconductor.png";
-import technologyImg from "@/assets/ServiceSection/ServiceSection_Technology.png";
-import systemImg from "@/assets/ServiceSection/ServiceSection_System.png";
+import semiconductorImg from "@/assets/ServiceSection/ServiceSection_Semiconductor.webp";
+import technologyImg from "@/assets/ServiceSection/ServiceSection_Technology.webp";
+import systemImg from "@/assets/ServiceSection/ServiceSection_System.webp";
 
 const services = [
   {
@@ -126,6 +126,7 @@ function ServiceCard({ service, index }: { service: typeof services[number]; ind
             src={service.image}
             alt={service.title}
             className={`max-h-full w-auto object-contain transition-transform duration-700 ${isHovered ? "scale-105" : "scale-100"}`}
+            loading="lazy"
           />
           {/* Gradient overlay at bottom of image */}
           <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card to-transparent pointer-events-none" />

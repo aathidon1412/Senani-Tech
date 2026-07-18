@@ -15,7 +15,7 @@ import {
   Factory,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import loadingLogo from "@/assets/loading_logo.png";
+import loadingLogo from "@/assets/loading_logo.webp";
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -288,7 +288,7 @@ const Contact = () => {
                       <Input
                         name="attachment"
                         type="file"
-                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                        accept=".pdf,.doc,.docx,.webp,.webp,.webp"
                         onChange={handleFileChange}
                         className="bg-muted/50 border-border focus:border-highlight file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 cursor-pointer"
                       />
@@ -364,6 +364,7 @@ const Contact = () => {
                           src={loadingLogo}
                           alt="Loading logo"
                           className="w-[94.4%] h-[94.4%] object-contain relative z-10"
+                          loading="lazy"
                         />
                       </div>
                       <h3 className="text-lg font-semibold text-foreground mb-1">

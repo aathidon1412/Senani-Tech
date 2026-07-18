@@ -10,8 +10,8 @@ import {
   CircuitBoard,
   Layers,
 } from "lucide-react";
-import logoShort from "@/assets/logo_2.png";
-import logoLong from "@/assets/logo_1.png";
+import logoShort from "@/assets/logo_2.webp";
+import logoLong from "@/assets/logo_1.webp";
 
 const footerLinks = {
   services: [
@@ -66,11 +66,13 @@ export function Footer() {
                 src={logoShort}
                 alt="SenaniTech Icon"
                 className="w-16 h-16 sm:w-20 sm:h-20 object-contain shrink-0"
+                loading="lazy"
               />
               <img
                 src={logoLong}
                 alt="SenaniTech"
                 className="h-20 md:h-28 w-auto max-w-[360px] object-contain -ml-2 sm:-ml-3 shrink-0"
+                loading="lazy"
               />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6 mt-4">

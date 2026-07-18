@@ -6,12 +6,12 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Activity, Layers, Code2, Factory } from "lucide-react";
 
-import signalIntegrityImg from "@/assets/technology_services/signal_integrity_simulations.png";
-import powerIntegrityImg from "@/assets/technology_services/power_integrity_simulations.png";
-import substrateDesignImg from "@/assets/technology_services/sustrate_design.png";
-import embeddedSoftwareImg from "@/assets/technology_services/embedded_software-development.png";
-import npiBuildImg from "@/assets/technology_services/npi_build.png";
-import productionBuildImg from "@/assets/technology_services/production_build.png";
+import signalIntegrityImg from "@/assets/technology_services/signal_integrity_simulations.webp";
+import powerIntegrityImg from "@/assets/technology_services/power_integrity_simulations.webp";
+import substrateDesignImg from "@/assets/technology_services/sustrate_design.webp";
+import embeddedSoftwareImg from "@/assets/technology_services/embedded_software-development.webp";
+import npiBuildImg from "@/assets/technology_services/npi_build.webp";
+import productionBuildImg from "@/assets/technology_services/production_build.webp";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -159,6 +159,7 @@ function SubServiceCard({ item, index, isGrid }: { item: AccordionItem; index: n
                 src={item.image}
                 alt={item.title}
                 className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
+                loading="lazy"
               />
             </div>
           )}
@@ -179,6 +180,7 @@ function SubServiceCard({ item, index, isGrid }: { item: AccordionItem; index: n
                   src={item.image}
                   alt={item.title}
                   className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
+                  loading="lazy"
                 />
               </div>
             )}
@@ -263,6 +265,7 @@ function ContentPanel({ section }: { section: Section }) {
                 src={section.image} 
                 alt={section.title} 
                 className="w-full h-auto object-contain aspect-square max-h-[180px] transition-transform duration-700 group-hover:scale-105" 
+                loading="lazy"
               />
             </div>
           )}

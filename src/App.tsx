@@ -3,20 +3,31 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import loadingLogo from "@/assets/loading_logo.png";
-import Index from "./pages/Index";
-import SemiconductorServices from "./pages/SemiconductorServices";
-import TechnologyServices from "./pages/TechnologyServices";
-import SystemsSolutions from "./pages/SystemsSolutions";
-import Portfolio from "./pages/Portfolio";
-import Blogs from "./pages/Blogs";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/NotFound";
+import loadingLogo from "@/assets/loading_logo.webp";
 import { WhatsAppBubble } from "./components/WhatsAppBubble";
 import { GlobalInteractiveBackground } from "./components/effects/GlobalInteractiveBackground";
+
+const Index = lazy(() => import("./pages/Index"));
+const SemiconductorServices = lazy(() => import("./pages/SemiconductorServices"));
+const TechnologyServices = lazy(() => import("./pages/TechnologyServices"));
+const SystemsSolutions = lazy(() => import("./pages/SystemsSolutions"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const Blogs = lazy(() => import("./pages/Blogs"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Minimalist fallback loading state
+const LoadingFallback = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-background/30 backdrop-blur-xs z-[999]">
+    <div className="flex flex-col items-center gap-2">
+      <div className="w-6 h-6 rounded-full border-2 border-primary/10 border-t-primary animate-spin" />
+      <span className="text-xs font-medium text-muted-foreground animate-pulse">Loading...</span>
+    </div>
+  </div>
+);
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -83,6 +94,7 @@ function PageTransitionWrapper({ children }: { children: React.ReactNode }) {
                 src={loadingLogo}
                 alt="Loading"
                 className="w-[94.4%] h-[94.4%] object-contain relative z-10"
+                loading="lazy"
               />
             </div>
           </motion.div>
@@ -104,18 +116,20 @@ const App = () => (
         <PageTransitionWrapper>
           <GlobalInteractiveBackground />
           <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/semiconductor-services" element={<SemiconductorServices />} />
-            <Route path="/technology-services" element={<TechnologyServices />} />
-            <Route path="/systems-solutions" element={<SystemsSolutions />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/semiconductor-services" element={<SemiconductorServices />} />
+              <Route path="/technology-services" element={<TechnologyServices />} />
+              <Route path="/systems-solutions" element={<SystemsSolutions />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/blogs" element={<Blogs />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
           <WhatsAppBubble />
         </PageTransitionWrapper>
       </BrowserRouter>

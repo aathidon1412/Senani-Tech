@@ -6,13 +6,13 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Cpu, ShieldCheck, Microscope, LayoutTemplate, PackageOpen, Boxes, PackagePlus, Truck, FileText } from "lucide-react";
 
-import ateImg from "@/assets/semiconductor_services/semiconductor_services_ate_services.png";
-import finalBoardImg from "@/assets/semiconductor_services/semiconductor_services_final_board.png";
-import probeCardsImg from "@/assets/semiconductor_services/semiconductor_services_probe_cards.png";
-import reliabilityImg from "@/assets/semiconductor_services/semiconductor_services_reliability_&_burn-in.png";
-import icCharImg from "@/assets/semiconductor_services/semiconductor_services_ic_characterization.png";
-import referenceImg from "@/assets/semiconductor_services/semiconductor_services_reference_design.png";
-import turnkeyImg from "@/assets/semiconductor_services/semiconductor_services_turnkey_build.png";
+import ateImg from "@/assets/semiconductor_services/semiconductor_services_ate_services.webp";
+import finalBoardImg from "@/assets/semiconductor_services/semiconductor_services_final_board.webp";
+import probeCardsImg from "@/assets/semiconductor_services/semiconductor_services_probe_cards.webp";
+import reliabilityImg from "@/assets/semiconductor_services/semiconductor_services_reliability_&_burn-in.webp";
+import icCharImg from "@/assets/semiconductor_services/semiconductor_services_ic_characterization.webp";
+import referenceImg from "@/assets/semiconductor_services/semiconductor_services_reference_design.webp";
+import turnkeyImg from "@/assets/semiconductor_services/semiconductor_services_turnkey_build.webp";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -201,6 +201,7 @@ function SubServiceCard({ item, index }: { item: AccordionItem; index: number })
                 src={item.image}
                 alt={item.title}
                 className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
+                loading="lazy"
               />
             </div>
           )}
@@ -221,6 +222,7 @@ function SubServiceCard({ item, index }: { item: AccordionItem; index: number })
                   src={item.image}
                   alt={item.title}
                   className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-110 relative z-10"
+                  loading="lazy"
                 />
               </div>
             )}
@@ -272,7 +274,7 @@ function KeyElementCard({ item, index }: { item: AccordionItem; index: number })
         {IconComponent ? (
           <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-primary group-hover:text-primary-foreground transition-colors duration-500" strokeWidth={2} />
         ) : item.image ? (
-          <img src={item.image} alt={item.title} className="w-full h-full object-contain" />
+          <img src={item.image} alt={item.title} className="w-full h-full object-contain" loading="lazy" />
         ) : null}
       </div>
 
@@ -329,6 +331,7 @@ function ContentPanel({ section }: { section: Section }) {
                 src={section.image} 
                 alt={section.title} 
                 className="w-full h-auto object-contain max-h-[280px] md:max-h-[320px] transition-transform duration-700 group-hover:scale-105" 
+                loading="lazy"
               />
             </div>
           )}

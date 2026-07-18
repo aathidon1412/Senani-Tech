@@ -15,19 +15,19 @@ import {
   MapPin
 } from "lucide-react";
 
-import boschLogo from "@/assets/trusted-by/bosch.png"
-import bynetLogo from "@/assets/trusted-by/bynet.png"
-import curneuLogo from "@/assets/trusted-by/curneu.png"
-import doverLogo from "@/assets/trusted-by/dover.png"
-import extrawareLogo from "@/assets/trusted-by/extraware.png"
-import healthcubeLogo from "@/assets/trusted-by/healthcube.png"
-import hticLogo from "@/assets/trusted-by/htic.png"
-import kirloskarLogo from "@/assets/trusted-by/kirloskar.png"
-import metLogo from "@/assets/trusted-by/c-met.png"
-import neurostellarLogo from "@/assets/trusted-by/neurostellar.png"
-import setsLogo from "@/assets/trusted-by/sets.png"
-import sonaincubationsLogo from "@/assets/trusted-by/sonaincubations.png"
-import voltechLogo from "@/assets/trusted-by/voltech.png"
+import boschLogo from "@/assets/trusted-by/bosch.webp"
+import bynetLogo from "@/assets/trusted-by/bynet.webp"
+import curneuLogo from "@/assets/trusted-by/curneu.webp"
+import doverLogo from "@/assets/trusted-by/dover.webp"
+import extrawareLogo from "@/assets/trusted-by/extraware.webp"
+import healthcubeLogo from "@/assets/trusted-by/healthcube.webp"
+import hticLogo from "@/assets/trusted-by/htic.webp"
+import kirloskarLogo from "@/assets/trusted-by/kirloskar.webp"
+import metLogo from "@/assets/trusted-by/c-met.webp"
+import neurostellarLogo from "@/assets/trusted-by/neurostellar.webp"
+import setsLogo from "@/assets/trusted-by/sets.webp"
+import sonaincubationsLogo from "@/assets/trusted-by/sonaincubations.webp"
+import voltechLogo from "@/assets/trusted-by/voltech.webp"
 
 const values = [
   {
@@ -212,6 +212,7 @@ const About = () => {
                         src={client.logo} 
                         alt={client.name} 
                         className="max-h-full max-w-full object-contain opacity-75 hover:opacity-100 transition-all duration-300 hover:scale-105"
+                        loading="lazy"
                       />
                     </div>
                   ))}

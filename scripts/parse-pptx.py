@@ -257,3 +257,12 @@ try {{
 if __name__ == "__main__":
     export_slides_via_powershell()
     parse_pptx()
+    
+    # Automatically convert newly exported slide PNGs to WebP and delete the PNG versions
+    try:
+        print("Converting newly exported slides to WebP...")
+        subprocess.run(["node", os.path.join(base_dir, "scripts", "convert-to-webp.js")], check=False)
+        print("Removing original slide PNGs...")
+        subprocess.run(["node", os.path.join(base_dir, "scripts", "remove-old-images.js")], check=False)
+    except Exception as e:
+        print(f"Failed to post-process slides into WebP format: {e}")

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
@@ -33,6 +33,14 @@ export default function Portfolio() {
     };
   }, [isPaused, totalSlides]);
 
+  const nextSlide = useCallback(() => {
+    setCurrentIdx((prev) => (prev + 1) % totalSlides);
+  }, [totalSlides]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIdx((prev) => (prev - 1 + totalSlides) % totalSlides);
+  }, [totalSlides]);
+
   // Keyboard navigation listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -44,10 +52,7 @@ export default function Portfolio() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [totalSlides]);
-
-  const nextSlide = () => setCurrentIdx((prev) => (prev + 1) % totalSlides);
-  const prevSlide = () => setCurrentIdx((prev) => (prev - 1 + totalSlides) % totalSlides);
+  }, [nextSlide, prevSlide]);
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -133,14 +138,15 @@ export default function Portfolio() {
                           className="w-full h-full flex items-center justify-center"
                         >
                           <img
-                            src={`/slides/Slide${slide.id}.PNG`}
+                            src={`/slides/Slide${slide.id}.webp`}
                             alt={slide.title}
                             className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl bg-white dark:bg-card border border-border/10"
+                            loading="lazy"
                             onError={(e) => {
                               // Fallback if image path case varies
                               const target = e.target as HTMLImageElement;
                               if (!target.src.endsWith(".png")) {
-                                target.src = `/slides/Slide${slide.id}.png`;
+                                target.src = `/slides/Slide${slide.id}.webp`;
                               }
                             }}
                           />

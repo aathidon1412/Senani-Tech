@@ -3,12 +3,12 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import conceptImg   from "@/assets/lifecycle/concept.png";
-import designImg    from "@/assets/lifecycle/design.png";
-import prototypeImg from "@/assets/lifecycle/prototype.png";
-import validationImg from "@/assets/lifecycle/validation.png";
-import productionImg from "@/assets/lifecycle/production.png";
-import launchImg    from "@/assets/lifecycle/launch.png";
+import conceptImg   from "@/assets/lifecycle/concept.webp";
+import designImg    from "@/assets/lifecycle/design.webp";
+import prototypeImg from "@/assets/lifecycle/prototype.webp";
+import validationImg from "@/assets/lifecycle/validation.webp";
+import productionImg from "@/assets/lifecycle/production.webp";
+import launchImg    from "@/assets/lifecycle/launch.webp";
 
 const phases = [
   {
@@ -197,6 +197,7 @@ export function LifecycleSection() {
                             src={phase.image}
                             alt={phase.title}
                             className="w-full h-full object-contain drop-shadow-md"
+                            loading="lazy"
                           />
                         </motion.div>
                       </div>

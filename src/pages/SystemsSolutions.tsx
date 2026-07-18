@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Activity, Zap, Code2, Factory, ShieldCheck, Wrench, Cpu, LayoutGrid } from "lucide-react";
-import productImg from "@/assets/system_solutions/product.png";
+import productImg from "@/assets/system_solutions/product.webp";
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const navItems = [
@@ -274,6 +274,7 @@ const SystemsSolutions = () => {
                     src={productImg} 
                     alt="Product Development" 
                     className="max-h-[300px] w-auto object-contain rounded-2xl shadow-md"
+                    loading="lazy"
                   />
                 </div>
               </div>
