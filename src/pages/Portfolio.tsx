@@ -41,21 +41,147 @@ export default function Portfolio() {
     setCurrentIdx((prev) => (prev - 1 + totalSlides) % totalSlides);
   }, [totalSlides]);
 
-  // Keyboard navigation listener
+  const [isBlackoutActive, setIsBlackoutActive] = useState(false);
+  const blackoutTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Keyboard navigation & DevTools / Screenshot protection listener
   useEffect(() => {
+    const showShield = () => {
+      setIsBlackoutActive(true);
+      const shield = document.getElementById("screenshot-blackout-shield");
+      if (shield) {
+        shield.style.display = "flex";
+        shield.style.opacity = "1";
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText("Screenshots disabled for protected portfolio content.").catch(() => {});
+      }
+      if (blackoutTimerRef.current) clearTimeout(blackoutTimerRef.current);
+      blackoutTimerRef.current = setTimeout(() => {
+        if (document.hasFocus() && !document.hidden) {
+          if (shield) shield.style.display = "none";
+          setIsBlackoutActive(false);
+        }
+      }, 2000);
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Catch Windows key (Meta), PrintScreen, F12, Snipping tool (Win+Shift+S), Cmd+Shift+3/4/S
+      if (
+        e.key === "Meta" ||
+        e.key === "PrintScreen" ||
+        e.keyCode === 44 ||
+        e.keyCode === 91 ||
+        e.keyCode === 92 ||
+        e.key === "F12" ||
+        e.keyCode === 123 ||
+        ((e.metaKey || e.ctrlKey || e.shiftKey) && (e.key === "S" || e.key === "s" || e.key === "3" || e.key === "4" || e.key === "P" || e.key === "p"))
+      ) {
+        showShield();
+        if (e.key === "PrintScreen" || e.keyCode === 44 || e.key === "F12") {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
+
+      // Block Inspect / Console / View Source / Save shortcuts (Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S)
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        ((e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j" || e.key === "C" || e.key === "c")) ||
+         e.key === "u" || e.key === "U" || e.key === "s" || e.key === "S")
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        showShield();
+        return;
+      }
+
       if (e.key === "ArrowRight") {
         nextSlide();
       } else if (e.key === "ArrowLeft") {
         prevSlide();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === "Meta" || e.key === "PrintScreen" || e.keyCode === 44 || e.keyCode === 91 || e.keyCode === 92) {
+        showShield();
+      }
+    };
+
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        showShield();
+      } else {
+        if (blackoutTimerRef.current) clearTimeout(blackoutTimerRef.current);
+        blackoutTimerRef.current = setTimeout(() => {
+          const shield = document.getElementById("screenshot-blackout-shield");
+          if (shield && document.hasFocus() && !document.hidden) shield.style.display = "none";
+          setIsBlackoutActive(false);
+        }, 500);
+      }
+    };
+
+    const handleBlur = () => {
+      showShield();
+    };
+
+    const handleFocus = () => {
+      if (blackoutTimerRef.current) clearTimeout(blackoutTimerRef.current);
+      blackoutTimerRef.current = setTimeout(() => {
+        const shield = document.getElementById("screenshot-blackout-shield");
+        if (shield && document.hasFocus() && !document.hidden) shield.style.display = "none";
+        setIsBlackoutActive(false);
+      }, 500);
+    };
+
+    window.addEventListener("keydown", handleKeyDown, true);
+    window.addEventListener("keyup", handleKeyUp, true);
+    window.addEventListener("contextmenu", handleContextMenu, true);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("blur", handleBlur, true);
+    window.addEventListener("focus", handleFocus, true);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown, true);
+      window.removeEventListener("keyup", handleKeyUp, true);
+      window.removeEventListener("contextmenu", handleContextMenu, true);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("blur", handleBlur, true);
+      window.removeEventListener("focus", handleFocus, true);
+      if (blackoutTimerRef.current) clearTimeout(blackoutTimerRef.current);
+    };
   }, [nextSlide, prevSlide]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div 
+      className="min-h-screen bg-background text-foreground flex flex-col select-none relative"
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+    >
+      {/* Blackout Overlay Shield for Screenshot Protection (Always in DOM) */}
+      <div 
+        id="screenshot-blackout-shield"
+        className={`fixed inset-0 z-[99999] bg-black flex-col items-center justify-center pointer-events-auto select-none p-6 text-center text-white ${
+          isBlackoutActive ? "flex" : "hidden"
+        }`}
+        style={{ background: "#000000" }}
+      >
+        <div className="w-16 h-16 rounded-2xl bg-red-950/60 border border-red-500/40 text-red-400 flex items-center justify-center mb-4 shadow-2xl">
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h3 className="text-xl font-bold text-white tracking-wide">Protected Portfolio Content</h3>
+        <p className="text-sm text-slate-400 max-w-sm mt-2">
+          Screen captures and window inspection are restricted to protect intellectual property.
+        </p>
+      </div>
+
       <Navbar />
 
       <main className="flex-1 pt-20 pb-16">
@@ -70,6 +196,8 @@ export default function Portfolio() {
               onMouseUp={() => setIsPaused(false)}
               onTouchStart={() => setIsPaused(true)}
               onTouchEnd={() => setIsPaused(false)}
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
             >
               {/* Hover status indicator */}
               <div className={`absolute top-4 right-4 z-20 px-3 py-1 rounded-full text-xs font-bold transition-all duration-300 pointer-events-none ${
@@ -97,7 +225,7 @@ export default function Portfolio() {
                   <ChevronRight size={24} />
                 </button>
 
-                <div className="relative w-full max-w-7xl h-[65vh] sm:h-[80vh] flex items-center justify-center">
+                <div className="relative w-full max-w-7xl h-[65vh] sm:h-[80vh] flex items-center justify-center select-none">
                   <AnimatePresence>
                     {[2, 1, 0].map((offset) => {
                       const idx = (currentIdx + offset) % totalSlides;
@@ -135,12 +263,16 @@ export default function Portfolio() {
                             stiffness: 260,
                             damping: 22,
                           }}
-                          className="w-full h-full flex items-center justify-center"
+                          className="w-full h-full flex items-center justify-center relative select-none"
                         >
                           <img
                             src={`/slides/Slide${slide.id}.webp`}
                             alt={slide.title}
-                            className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl bg-white dark:bg-card border border-border/10"
+                            draggable={false}
+                            onDragStart={(e) => e.preventDefault()}
+                            onContextMenu={(e) => e.preventDefault()}
+                            className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl bg-white dark:bg-card border border-border/10 select-none pointer-events-none"
+                            style={{ userSelect: "none", WebkitUserDrag: "none" } as React.CSSProperties}
                             loading="lazy"
                             onError={(e) => {
                               // Fallback if image path case varies
@@ -149,6 +281,12 @@ export default function Portfolio() {
                                 target.src = `/slides/Slide${slide.id}.webp`;
                               }
                             }}
+                          />
+                          {/* Protective transparent overlay over the image */}
+                          <div 
+                            className="absolute inset-0 z-20 bg-transparent select-none cursor-default"
+                            onContextMenu={(e) => e.preventDefault()}
+                            onDragStart={(e) => e.preventDefault()}
                           />
                         </motion.div>
                       );

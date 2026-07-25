@@ -1,7 +1,14 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Content-Type: application/json");
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -120,6 +127,8 @@ $html_body = '
 </div>
 ';
 
+$subject = "New Message from $name via SenaniTech Contact Form";
+
 try {
     $encryption = ($port === 465) ? 'ssl://' : '';
     $socket = fsockopen($encryption . $host, $port, $errno, $errstr, 15);
@@ -137,22 +146,52 @@ try {
         return $data;
     };
 
-    $send = function($cmd) use ($socket, $read) {
+    $send = function($cmd, $expectedCode = null) use ($socket, $read) {
         fputs($socket, $cmd . "\r\n");
-        return $read();
+        $resp = $read();
+        if ($expectedCode !== null && strpos(trim($resp), (string)$expectedCode) !== 0) {
+            throw new Exception("SMTP command failed: '$cmd'. Expected response code $expectedCode, got: " . trim($resp));
+        }
+        return $resp;
     };
 
-    $read(); // SMTP Greeting
-    $send("EHLO " . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
+    // Read SMTP Greeting
+    $greeting = $read();
+    if (strpos(trim($greeting), '220') !== 0) {
+        throw new Exception("SMTP Greeting Error: " . trim($greeting));
+    }
+
+    $send("EHLO " . ($_SERVER['HTTP_HOST'] ?? 'localhost'), 250);
+    
+    // If using port 587, initiate STARTTLS to upgrade connection to TLS
+    if ($port === 587) {
+        $send("STARTTLS", 220);
+        
+        $crypto_method = STREAM_CRYPTO_METHOD_TLS_CLIENT;
+        if (defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) {
+            $crypto_method = STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT;
+        }
+        // In PHP 7.4+, we can combine client protocols or use TLSv1_2/TLSv1_3
+        if (defined('STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT')) {
+            $crypto_method |= STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT;
+        }
+        
+        if (!stream_socket_enable_crypto($socket, true, $crypto_method)) {
+            throw new Exception("Failed to start TLS encryption on socket.");
+        }
+        
+        // Resend EHLO after establishing TLS connection
+        $send("EHLO " . ($_SERVER['HTTP_HOST'] ?? 'localhost'), 250);
+    }
     
     // Authenticate
-    $send("AUTH LOGIN");
-    $send(base64_encode($user));
-    $send(base64_encode($pass));
+    $send("AUTH LOGIN", 334);
+    $send(base64_encode($user), 334);
+    $send(base64_encode($pass), 235);
 
-    $send("MAIL FROM: <" . $user . ">");
-    $send("RCPT TO: <" . $to . ">");
-    $send("DATA");
+    $send("MAIL FROM: <" . $user . ">", 250);
+    $send("RCPT TO: <" . $to . ">", 250);
+    $send("DATA", 354);
 
     $boundary = md5(uniqid(time()));
     
@@ -197,9 +236,9 @@ try {
 
     $email_raw = implode("\r\n", $headers) . "\r\n\r\n" . implode("\r\n", $body_parts);
     
-    $send($email_raw);
-    $send(".");
-    $send("QUIT");
+    fputs($socket, $email_raw . "\r\n");
+    $send(".", 250);
+    $send("QUIT", 221);
     fclose($socket);
 
     echo json_encode(["success" => true, "message" => "Message sent successfully!"]);

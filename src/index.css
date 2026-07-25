@@ -248,3 +248,31 @@
     box-shadow: var(--shadow-card);
   }
 }
+
+/* Print & Screenshot Export Blackout Protection */
+@media print {
+  body {
+    background-color: #000000 !important;
+    color: #000000 !important;
+  }
+  #root, img, video, canvas, svg {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  body::before {
+    content: "Protected Content - Printing and Capture Disabled";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000 !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 24px !important;
+    font-weight: bold !important;
+    z-index: 999999 !important;
+  }
+}

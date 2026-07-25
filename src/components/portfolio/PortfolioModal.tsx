@@ -44,11 +44,28 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
     setShowOutline(false);
   };
 
-  // Keyboard navigation
+  // Keyboard navigation & DevTools/Inspect shortcut protection listener
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Block F12 (DevTools)
+      if (e.key === "F12" || e.keyCode === 123) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      // Block Inspect / Console / View Source / Save shortcuts (Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S)
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        ((e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j" || e.key === "C" || e.key === "c")) ||
+         e.key === "u" || e.key === "U" || e.key === "s" || e.key === "S")
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
       if (e.key === "ArrowRight" || e.key === "Space") {
         e.preventDefault();
         nextSlide();
@@ -60,8 +77,16 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    window.addEventListener("keydown", handleKeyDown, true);
+    window.addEventListener("contextmenu", handleContextMenu, true);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown, true);
+      window.removeEventListener("contextmenu", handleContextMenu, true);
+    };
   }, [isOpen, nextSlide, prevSlide, onClose]);
 
   // Slideshow Auto-play
@@ -252,12 +277,26 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
 
 function renderSlide(slide: SlideData) {
   return (
-    <div className="w-full h-full flex items-center justify-center p-1 md:p-3 relative bg-slate-950">
+    <div 
+      className="w-full h-full flex items-center justify-center p-1 md:p-3 relative bg-slate-950 select-none"
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+    >
       <img
         src={`/slides/Slide${slide.id}.webp`}
         alt={slide.title}
-        className="max-h-full max-w-full object-contain rounded-xl border border-slate-800/80 shadow-2xl"
+        draggable={false}
+        onDragStart={(e) => e.preventDefault()}
+        onContextMenu={(e) => e.preventDefault()}
+        className="max-h-full max-w-full object-contain rounded-xl border border-slate-800/80 shadow-2xl select-none pointer-events-none"
+        style={{ userSelect: "none", WebkitUserDrag: "none" } as React.CSSProperties}
         loading="lazy"
+      />
+      {/* Protective transparent overlay shield over the slide image */}
+      <div 
+        className="absolute inset-0 z-20 bg-transparent select-none cursor-default"
+        onContextMenu={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
       />
     </div>
   );

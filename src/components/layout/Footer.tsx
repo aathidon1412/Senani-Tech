@@ -206,7 +206,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm text-center md:text-left">
-            © {new Date().getFullYear()} SenaniTech Inc. All rights reserved.
+            © {new Date().getFullYear()} SenaniTech All rights reserved.
           </p>
           <motion.button
             onClick={scrollToTop}

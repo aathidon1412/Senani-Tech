@@ -71,13 +71,23 @@ const Contact = () => {
     };
 
     try {
-      const response = await fetch("/api/contact", {
+      let response = await fetch("/api/contact.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
+
+      if (response.status === 404) {
+        response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+      }
 
       // If the API endpoint is not found (404), check if we are in local development
       if (response.status === 404) {

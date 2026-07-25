@@ -39,16 +39,47 @@ function ScrollToTop() {
 
 function PageTransitionWrapper({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    const FIVE_MINUTES_MS = 5 * 60 * 1000;
+    const now = Date.now();
+    const lastActiveStr = sessionStorage.getItem("senani_last_active");
+    const hasInitialLoaded = sessionStorage.getItem("senani_has_initial_loaded") === "true";
 
-    return () => clearTimeout(timer);
+    const lastActive = lastActiveStr ? parseInt(lastActiveStr, 10) : 0;
+    const isInactiveFor5Mins = lastActive > 0 && (now - lastActive > FIVE_MINUTES_MS);
+
+    // Show loading ONLY if first time entering website OR inactive for > 5 mins
+    if (!hasInitialLoaded || isInactiveFor5Mins) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        sessionStorage.setItem("senani_has_initial_loaded", "true");
+        sessionStorage.setItem("senani_last_active", String(Date.now()));
+        setIsLoading(false);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    } else {
+      // Actively navigating within 5 mins - update activity timestamp without loading screen
+      sessionStorage.setItem("senani_last_active", String(now));
+      setIsLoading(false);
+    }
   }, [pathname]);
+
+  // Track user activity (click, keydown, touch, scroll) to maintain 5-minute window
+  useEffect(() => {
+    const updateActivity = () => {
+      sessionStorage.setItem("senani_last_active", String(Date.now()));
+    };
+
+    const events = ["mousedown", "keydown", "touchstart", "scroll"];
+    events.forEach((evt) => window.addEventListener(evt, updateActivity, { passive: true }));
+
+    return () => {
+      events.forEach((evt) => window.removeEventListener(evt, updateActivity));
+    };
+  }, []);
 
   return (
     <>
